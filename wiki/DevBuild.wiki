@@ -1,0 +1,14 @@
+#summary Developer Build Instructions
+
+*Introduction*
+
+To install this library and developer environment you will need to download the files unix.tar.bz2 and if on Windows environments you will need first to download and install the tools in the wintools.zip on the downloads page. 
+
+Details follow
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
