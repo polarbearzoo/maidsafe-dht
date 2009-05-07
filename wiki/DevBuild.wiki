@@ -35,10 +35,13 @@ You MUST have gcc43 installed
 *Windows*
 ##############
 #*mingw - current* 
-#This can run alongside your visual studio implemetation - uses c:\usr\lib etc 
+
+#This can run alongside your visual studio implementation - uses c:\usr\lib etc 
+
 #rather than MSVC c:\lib\ so wont mess with your libraries
-#############
+
 #Do all these commands from the BUILD_DIR in your code
+
 1: download - wintools.zip
 
 2: download - unix.tar.bz2 (you have this already :-)
