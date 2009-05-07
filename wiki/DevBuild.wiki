@@ -7,8 +7,76 @@ To install this library and developer environment you will need to download the 
 Details follow
 
 = Details =
+*Linux*
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+all thats needed is really is unzip the unix.tar.bz2
+
+1: run the  linuxbuild.sh from the unix.tar.bz2 file
+  sudo ./linuxbuild.sh
+or
+  su - (i.e. switch to root user)
+  ./linuxbuild.sh
+
+That should make and install all libraries needed 
+
+2: go to build dir for linux [trunk/build/Linux]
+3: run cmake ../../
+4: run make (this will make all]
+   run make tests - for all tests
+   run make Experimental (to configure build test and upload to dashboard)
+   run make package for auto rpm or deb [on windows creates installer]
+   etc.
+
+Notes:
+Make sure there is no old version of protocol buffers installed (e.g. v2.0.1)
+You MUST have gcc43 installed
+
+
+*Windows*
+##############
+#*mingw - current* 
+#This can run alongside your visual studio implemetation - uses c:\usr\lib etc 
+#rather than MSVC c:\lib\ so wont mess with your libraries
+#############
+#Do all these commands from the BUILD_DIR in your code
+1: download - wintools.zip
+2: download - unix.tar.bz2 (you have this already :-)
+3: unzip wintools.zip and install tdm-mingw and add to path.(select this at install)
+4: Install msys [when asked for interface with mingw - select y - then type c:/MinGW as location]
+5: This will install a Msys icon on your desktop [only build mingw libs with this - i.e. not our programs]
+6: go to /<location of your sources>/BUILD_FILES/ [note cd /c/ is c drive cd /d/ is d drive etc.]
+7: type ./winbuild.sh ( take a rest for a couple of hours while the environment is built)
+8: Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion)
+9: Install codeblocks - you can include mingw from there if you want - but not necessary. [ I would include the contrib nsis stuff for later on - but again not necessary]
+10: Install NSIS (allow you to build an installer)
+11: open command prompt start->run->cmd <enter>
+12: go to build/win dir in subversion
+13 type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" <enter>
+14 Open codeblocks and work away 
+
+all usual suspects are available - instead of typing make type mingw32-make - apart from that you have all the usual targets
+mingw32-make [build everything]
+mingw32-make perpetualdata [build only that target]
+mingw32-make Experimental [build everything and report to dashboard]
+mingw32-make package [ builds installer ] 
+mingw32-make tests [builds and runs test suite ]
+etc. 
+############
+#MSVC - dpreciated
+##########
+all thats needed is really 
+
+dowload and unpack http:://www.maidsafe.net/winfiles.zip
+
+This contains all libs and headers needed - unzip this to c:\ (givine c:\lib c:\include etc.)
+
+That should install all libraries needed - just need to make sure you have protoc compiler downloaded 
+from google and a copy of visual studio express 2008 installed also.
+
+1: go to build dir for windows [trunk/build/Win]
+2: run windowscmake.bat
+3: run nmake (this will make all]
+   run nmake tests - for all tests
+   run nmake Experimental (to configure build test and upload to dashboard)
+   run nmake package to create windows installer
+   etc.
