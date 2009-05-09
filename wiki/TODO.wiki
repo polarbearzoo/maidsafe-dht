@@ -14,14 +14,17 @@ Thanks
   # Allow a use UPnP (bool)
   # Allow bandwidth up/download limits, reporting and quota's 
  # Rewrite UPnP (this is very messy and uses RTTI) 
- # Add checkes for change in local and external IP addresses. This should be achieved by:
+ # Add checks for change in local and external IP addresses. This should be achieved by:
   # Checking messages are being recieved at least on per 2 secs
    * if not send a whoami to the node we bootstrapped off, on fail re-bootstrap AND ping every node in routing table starting with closest buckets. Also check at same time local IP address never altered with a local IP address check.
  # Implement effective logging
+ # Implement installer for Linux, windows and OS/X (cmake handles this effectively)
  # Rewrite get local ip and port to use UDT functions
  # Remove boost asio libraries
  # Remove ALL compiler warnings
  # Improve all tests to use only random ports and files for testing (i.e. write proper tests :-) ) 
+ # Get to as close to 1--% test coverage ASAP
+ # Implement a full errno.h file to handle errors more effectively.
  
 These are the main block issues at the moment, the first 3 are essential for any production system - and as we say, *all help appreciated*
 
