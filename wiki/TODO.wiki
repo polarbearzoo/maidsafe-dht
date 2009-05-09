@@ -23,7 +23,7 @@ Thanks
  # Remove boost asio libraries
  # Remove ALL compiler warnings
  # Improve all tests to use only random ports and files for testing (i.e. write proper tests :-) ) 
- # Get to as close to 1--% test coverage ASAP
+ # Get to as close to 100% test coverage ASAP
  # Implement a full errno.h file to handle errors more effectively.
  
 These are the main block issues at the moment, the first 3 are essential for any production system - and as we say, *all help appreciated*
