@@ -1,0 +1,25 @@
+#summary Immediate TODO list
+#labels Phase-Requirements,TODO
+
+= Introduction =
+
+Urgent TODO items. We are releasing this code as is at the moment, it *does* work although its messy at the moment. We are cleaning and creating an appropriate interface as a matter of urgency, please feel free to send us patches - *we need your help*
+
+Thanks
+
+
+= Details =
+
+ # Create an effective API 
+  # Allow a use UPnP (bool)
+ # Rewrite UPnP (this is very messy and uses RTTI) 
+ # Add checkes for change in local and external IP addresses. This should be achieved by:
+  # Checking messages are being recieved at least on per 2 secs
+   * if not send a whoami to the node we bootstrapped off, on fail re-bootstrap AND ping every node in routing table starting with closest buckets. Also check at same time local IP address never altered with a local IP address check.
+ # Rewrite get local ip and port to use UDT functions
+ # Remove boost asio libraries
+ # Remove ALL compiler warnings 
+ 
+These are the main block issues at the moment, the first 3 are essential for any production system - and as we say, *all help appreciated*
+
+   
