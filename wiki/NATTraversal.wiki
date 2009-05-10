@@ -1,0 +1,47 @@
+#summary Nat Traversal, hole punch and UPnP
+
+= Introduction =
+
+This is a description of the NAT traversal techniques used in this project.
+
+
+= Details =
+To enable the most effective NAT traversal routines we use some kadmelia tricks. This is done mainly to enable us to pass freely and easily the rendezvous nodes for each contact (if required) amongst other nodes.
+
+Rendezvous requirements
+
+For a node to be a rendezvous capable node it must be directly contactable from any node on the network. These nodes will be
+
+   1. Directly attached to the net.
+   2. Behind a full cone type NAT device
+   3. Be behind a NAT router thats port forwarded to the node
+   4. Be connected via upnp (http over udp - with no authentication mechanism and turned of by many manufaturers nowadays) or DPWS1 or NAT-PMP1 or some other router mapping protocol.
+
+To detect which types we are dealing with we have a couple of neat tricks.
+Node A - wants to connect
+Node B - is a boostrap node (of one of the above types)
+Node C - is any random node B knows of.
+
+The procedure is
+
+   1. Node A sends B a special boostrap message
+   2. Node B asks C to try ping A
+         1. If False 
+         2. {Node B asks C to try a rendezvous to A with B as rendezvous 
+               1. IF False
+               2. Node B replies to node A with a flag stating no communication} - END (later we can do tunneling for clients if needed)
+         3. else {
+         4. Node B replies to A with A's external IP and PORT and a flag stating A can only be contacted via rendezvous} - END
+   3. If true - node B replies to node A - DIRECT connected - END
+   4. Directly connected nodes have NO rendezvous IP or Port in their contact tuple ("" and 0)
+
+We MUST ensure for situations where direct connected nodes can start their vaults on a named port number. This has to be set in the config file for the vault and MUST be allowed to be set (if required) in the GUI. Failure to do this will cost us dearly !!! [DO NOT IGNORE THIS CRUCIAL POINT]
+
+Then normal boostrap happens - i.e. A tries to find_node(own kademlia ID)
+
+
+_____________________________________________________________________________________________
+
+*1The standard DPWS is a candidate successor for UPnP. It solves many of the problems of UPnP. A DPWS client is included in Microsoft Windows Vista as part of the Windows Rally technologies.
+
+Another alternative, NAT-PMP, is an IETF draft introduced by Apple Inc in 2005.
