@@ -11,8 +11,11 @@ To build the project you will require to have cmake installed and in your path.
 
 
 1: Download the maidsafe-dht src.
+
 2: cd to build dir for linux [src/build/Linux]
+
 3: run cmake ../../
+
 4: run *make* (this will make all]
    run *make tests* - for all tests
    run *make Experimental* (to configure build test and upload to dashboard)
