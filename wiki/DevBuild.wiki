@@ -78,7 +78,7 @@ all thats needed is really
 
 dowload and unpack http:://www.maidsafe.net/winfiles.zip
 
-This contains all libs and headers needed - unzip this to c:\ (givine c:\lib c:\include etc.)
+This contains all libs and headers needed - unzip this to c:\ (giving c:\lib c:\include etc.)
 
 That should install all libraries needed - just need to make sure you have protoc compiler downloaded 
 from google and a copy of visual studio express 2008 installed also.
