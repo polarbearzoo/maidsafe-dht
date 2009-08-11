@@ -20,12 +20,6 @@ Thanks
  # Remove ALL compiler warnings
  # Get to as close to 100% test coverage ASAP
  # Implement a full errno.h file to handle errors more effectively.
- ~~# Increase routing table to allow 
-  * Addition of public keys for each node
-    # This should be done in conjunction with a switch to allow *all* communications to be encrypted using RSA or similar(RSA included in library in base)
-  * Addition of round trip times
-   # This should be done by adding a RTT to the ping and saving the RTT in the routing table. ~~
- # Routing table to be made available in API (for reading *and* writing)
 
 
 
