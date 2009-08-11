@@ -14,21 +14,17 @@ Thanks
   # Allow bandwidth up/download limits, reporting and quota's 
  # Rewrite UPnP (this is very messy and uses RTTI) 
  # Add checks for change in local and external IP addresses. This should be achieved by:
-  # Checking messages are being recieved at least on per 2 secs
-   * if not send a whoami to the node we bootstrapped off, on fail re-bootstrap AND ping every node in routing table starting with closest buckets. Also check at same time local IP address never altered with a local IP address check.
  # Implement effective logging (use Google glog for this)
  # Implement installer for Linux, windows and OS/X (cmake handles this effectively)
- # Rewrite get local ip and port to use UDT functions
  # Remove *boost asio libraries*
  # Remove ALL compiler warnings
- # Improve all tests to use only random ports and files for testing (i.e. write proper tests :-) ) 
  # Get to as close to 100% test coverage ASAP
  # Implement a full errno.h file to handle errors more effectively.
- # Increase routing table to allow 
+ ~~# Increase routing table to allow 
   * Addition of public keys for each node
     # This should be done in conjunction with a switch to allow *all* communications to be encrypted using RSA or similar(RSA included in library in base)
   * Addition of round trip times
-   # This should be done by adding a RTT to the ping and saving the RTT in the routing table.
+   # This should be done by adding a RTT to the ping and saving the RTT in the routing table. ~~
  # Routing table to be made available in API (for reading *and* writing)
 
 
