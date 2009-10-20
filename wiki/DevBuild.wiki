@@ -22,8 +22,7 @@ To build the project you will require to have cmake installed and in your path: 
    run *make Experimental* (to configure build test and upload to dashboard)
    run *make package* for auto rpm or deb [on windows creates installer]
    run *make install* to install library and API headers
-   etc.
-
+   
 Notes:
 You MUST have gcc43 installed
 
