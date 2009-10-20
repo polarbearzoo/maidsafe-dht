@@ -3,26 +3,21 @@
 
 = Introduction =
 
-Urgent TODO items. We are releasing this code as is at the moment, it *does* work although its messy at the moment. We are cleaning and creating an appropriate interface as a matter of urgency, please feel free to send us patches - *we need your help*
+Urgent TODO items. We are releasing this code as is at the moment, it *does* work although its messy at the moment. We are cleaning and creating an appropriate interface as a matter of urgency, please feel free to send us patches - *we need your help*.
 
 Thanks
 
 = Details =
 
- # Create an effective API 
-  # Allow a use UPnP (bool)
-  # Allow bandwidth up/download limits, reporting and quota's 
- # Rewrite UPnP (this is very messy and uses RTTI) 
- # Add checks for change in local and external IP addresses. This should be achieved by:
- # Implement effective logging (use Google glog for this)
+ # Allow bandwidth up/download limits, reporting and quotas.
+ # Add checks for change in local and external IP addresses.
+ # Implement effective logging (use Google glog for this). We need a way to compile GLOG on MinGW to have logging on Windows.
  # Implement installer for Linux, windows and OS/X (cmake handles this effectively)
- # Remove *boost asio libraries*
- # Remove ALL compiler warnings
+ # Remove *boost asio libraries*. They are currently used to obtain the address from local network interfaces.
+ # Remove ALL compiler warnings. Most compiler warnings we have are now in the cryptopp library. Removal involves submitting of the patches to the creators 
  # Get to as close to 100% test coverage ASAP
  # Implement a full errno.h file to handle errors more effectively.
 
 
 
-These are the main block issues at the moment, the first 3 are essential for any production system - and as we say, *all help appreciated* All work *must* be submitted as a patch and to Google coding standards (we use internally) which can be found at  http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml 
-
-   
+As we said before, *all help appreciated*. All work *must* be submitted as a patch and to Google coding standards (we use internally) which can be found at  http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
