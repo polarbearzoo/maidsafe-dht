@@ -2,20 +2,21 @@
 
 *Introduction*
 
-Please ensure you have boost installed (version 1_37) as well as google gtest and protocol bufferes. these are all the libraries required. 
+Please ensure you have the following required libraries installed:
 
-To build the project you will require to have cmake installed and in your path. 
+- boost version 1-40         http://sourceforge.net/projects/boost/files/boost/1.40.0/
+- google gtest 1.4           http://code.google.com/p/googletest/downloads/list
+- protocol buffers 2.1.0     http://code.google.com/p/protobuf/downloads/list
+
+To build the project you will require to have cmake installed and in your path: http://www.cmake.org/cmake/resources/software.html
 
 = Details =
 *Linux*
 
 
 1: Download the maidsafe-dht src.
-
 2: cd to build dir for linux [src/build/Linux]
-
 3: run cmake ../../
-
 4: run *make* (this will make all]
    run *make tests* - for all tests
    run *make Experimental* (to configure build test and upload to dashboard)
@@ -24,7 +25,6 @@ To build the project you will require to have cmake installed and in your path.
    etc.
 
 Notes:
-Make sure there is no old version of protocol buffers installed (e.g. v2.0.1)
 You MUST have gcc43 installed
 
 *Windows*
