@@ -15,7 +15,6 @@ To build the project you will require to have cmake installed and in your path: 
 = Details =
 *Linux*
 
-
 1: Download the maidsafe-dht src.
 
 2: cd to build dir for linux [src/build/Linux]
@@ -28,12 +27,9 @@ To build the project you will require to have cmake installed and in your path: 
    run *make package* for auto rpm or deb [on windows creates installer]
    run *make install* to install library and API headers
    
-Notes:
-You MUST have gcc43 installed
+Notes: You MUST have gcc43 installed.
 
-*Windows*
-##############
-#*mingw - current* 
+*Windows - mingw - current* 
 
 #This can run alongside your visual studio implementation - uses c:\usr\lib etc 
 
@@ -59,38 +55,17 @@ You MUST have gcc43 installed
 
 9: Install NSIS (allow you to build an installer)
 
-10: open command prompt start->run->cmd <enter>
+10: open command prompt start->run->cmd --> enter
 
 11: go to build/win dir in subversion
 
-12 type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" <enter>
+12 type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" --> enter
 
 13 Open codeblocks and work away 
 
-all usual suspects are available - instead of typing make type mingw32-make - apart from that you have all the usual targets
-mingw32-make [build everything]
-mingw32-make perpetualdata [build only that target]
-mingw32-make Experimental [build everything and report to dashboard]
-mingw32-make package [ builds installer ] 
-mingw32-make tests [builds and runs test suite ]
-etc. 
+all usual suspects are available - instead of typing make type mingw32-make - apart from that you have all the usual targets.
 
-############
-#*MSVC - deprecated*
-##########
-all thats needed is really 
+*MSVC - deprecated*
 
-dowload and unpack http:://www.maidsafe.net/winfiles.zip
 
-This contains all libs and headers needed - unzip this to c:\ (giving c:\lib c:\include etc.)
-
-That should install all libraries needed - just need to make sure you have protoc compiler downloaded 
-from google and a copy of visual studio express 2008 installed also.
-
-1: go to build dir for windows [trunk/build/Win]
-2: run windowscmake.bat
-3: run nmake (this will make all]
-   run nmake tests - for all tests
-   run nmake Experimental (to configure build test and upload to dashboard)
-   run nmake package to create windows installer
-   etc.
+We do not offer VS support anymore
