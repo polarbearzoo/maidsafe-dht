@@ -7,8 +7,13 @@ This section is dedicated to giving some guidelines that will help contributors 
 = Guidelines =
 
   # The level of warnings specified in the CMakeList is the one we want to maintain, therefore, make sure that no new warnings appear when compiling.<br>
-  # Run a make Experimental and make sure all tests pass before submitting the patch. This will leave proof on the dashboard that the code ran properly at least once on one machine.<br>
+
+  # Run a make Experimental and make sure all tests pass before submitting the patch. This will leave proof on the dashboard that the code ran properly at least once on one machine.
+
   # Part of the tests run in the suite are styling tests. The script (http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py) run to check the style is written in python so you will need the interpreter to run it. Code submitted must pass those tests as well.
+
   # If new features are added, tests must be provided to verify the correct functionality and existing tests must be updated accordingly.
+
   # Approved Boost libraries are to be used whenever possible.
+
   # Items in the TODO list are first in line for consideration.
