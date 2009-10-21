@@ -13,58 +13,54 @@ Please ensure you have the following required libraries installed:
 To build the project you will require to have cmake installed and in your path: http://www.cmake.org/cmake/resources/software.html
 
 = Details =
-*Linux*
+==*Linux*==
 
 1: Download the maidsafe-dht src.
 
-2: cd to build dir for linux [src/build/Linux]
+2: cd to build dir for linux (src/build/Linux)
 
 3: run cmake ../../
 
-4: run *make* (this will make all]
-   run *make tests* - for all tests
-   run *make Experimental* (to configure build test and upload to dashboard)
-   run *make package* for auto rpm or deb [on windows creates installer]
-   run *make install* to install library and API headers
+4: run *make* (this will make all)
+
+`run *make tests* - for all tests`
+
+`run *make Experimental* (to configure build test and upload to dashboard)`
+
+`run *make package* for auto rpm or deb (on windows creates installer)`
+
+run *make install* to install library and API headers
    
 
-*Windows - mingw - current* 
+==*Windows - mingw - current* ==
 
-#This can run alongside your visual studio implementation - uses c:\usr\lib etc 
+This can run alongside your visual studio implementation - uses c:\usr\lib rather than MSVC c:\lib\ so wont mess with your libraries
 
-#rather than MSVC c:\lib\ so wont mess with your libraries
+Do all these commands from the BUILD_DIR in your code:
 
-#Do all these commands from the BUILD_DIR in your code
+1. Download - wintools.zip
 
-1: download - wintools.zip
+2. Unzip wintools.zip and install tdm-mingw and add to path.(select this at install)
 
-2: unzip wintools.zip and install tdm-mingw and add to path.(select this at install)
+3. Install msys. When asked for interface with mingw - select y - then type c:/MinGW as location.
 
-3: Install msys [when asked for interface with mingw - select y - then type c:/MinGW as location]
+4. This will install a Msys icon on your desktop. Only build mingw libs with this - i.e. not our programs.
 
-4: This will install a Msys icon on your desktop [only build mingw libs with this - i.e. not our programs]
+Once you get to this point, you will have an environment which will allow you to compile the libraries required with the same commands as if you were in a Linux envirionment (namely, configure, make, make install). Proceed to build the libraries, which should take a couple of hours, and then continue with the list.
 
-5: go to /<location of your sources>/BUILD_FILES/ [note cd /c/ is c drive cd /d/ is d drive etc.]
+5. Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
 
-6: type ./winbuild.sh ( take a rest for a couple of hours while the environment is built)
+6. Install codeblocks - you can include mingw from there if you want - but not necessary. (We would suggest including the contrib nsis stuff for later on - but again not necessary).
 
-7: Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion)
+7. Install NSIS (allow you to build an installer).
 
-8: Install codeblocks - you can include mingw from there if you want - but not necessary. [ I would include the contrib nsis stuff for later on - but again not necessary]
+8. Open a CMD terminal and go to build/win dir in subversion.
 
-9: Install NSIS (allow you to build an installer)
+9. Type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" --> enter, and you will have a codeblocks project you can work away with =).
 
-10: open command prompt start->run->cmd --> enter
+All usual targets are available - instead of typing make type mingw32-make.
 
-11: go to build/win dir in subversion
-
-12 type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" --> enter
-
-13 Open codeblocks and work away 
-
-all usual suspects are available - instead of typing make type mingw32-make - apart from that you have all the usual targets.
-
-*MSVC - deprecated*
+==*MSVC - deprecated*==
 
 
 We do not offer VS support anymore
