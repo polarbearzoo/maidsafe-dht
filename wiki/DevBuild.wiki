@@ -50,7 +50,7 @@ Once you get to this point, you will have an environment which will allow you to
 
 5. Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
 
-6. Install CodeBlocks. You can include MinGW from there if you want - but not necessary. (We would suggest including the contrib NSIS stuff for later on - but again not necessary).
+6. Install `CodeBlocks`. You can include MinGW from there if you want - but not necessary. (We would suggest including the contrib NSIS stuff for later on - but again not necessary).
 
 7. Install NSIS (allow you to build an installer).
 
