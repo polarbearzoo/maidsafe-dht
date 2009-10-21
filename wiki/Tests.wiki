@@ -1,5 +1,24 @@
-#summary Testing environment description.
+#summary Testing Environment Description
 
 = Introduction =
 
 maidsafe-dht uses gtest to provide a suite of tests that should allow the validation of changes to the code. We by no means claim that the code is a 100% tested, and that is one of our big TODOs right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
+
+= Test suite =
+
+Our test suite uses gtest, which is a required library (see Developer Build Instructions). For a complete guide to GTEST options please refer to http://code.google.com/p/googletest/w/list. However we offer the next few pointers:
+
+  # The individual groups of tests that you can compile defining a target are TESTbase, TESTupnp, TESTtransport, TESTrpcprotocol, TESTkademlia, and TESTknode. This means these are possibilities as well for the "make $target" syntax.
+  # Filtering groups or individual tests is possible. Each test file has a distinctive name which allows executing of just the test of that file. To filter even further, the test name itself can be used to single it out. Meta-characters such as the `*` symbol can be used in the filter. Eg.:
+    - TESTbase --gtest_filter=$filterword<br>
+    - TESTbase --gtest_filter=`*`$filterword`*`
+  # Repetition and breaking of execution can also be specified when running any of the tests. For repetition, use -1 to indicate infinite cycles. Using the break on failure flag might be particularly useful with the -1. Eg.:
+    - TESTbase --gtest_filter=$filterword --gtest_repeat=10<br>
+    - TESTbase --gtest_filter=$filterword --gtest_repeat=-1 --gtest_break_on_failure
+  # After adding a test to the suite you will need to run cmake ../../ again so that the ctest inventory is updated. You can check that you new test has been added and will be run when reporting to the dashboard, run ctest -N. This command will display all tests with a number next to them. Once you see a test there, it can also be run with the command ctest -I m,n, where m and n define the interval. If you make m and n equal only that test will be run. For output, add -V to the mix. Full ctest options can be found at http://www.itk.org/Wiki/CMake_Testing_With_CTest.
+
+= Types of tests =
+
+We distinguish two different types of tests in this project. We do not do unit tests _per se_, but either Behavioural (abbreviated BEH) or Functional (FUNC) ones. *Behaviourals* usually are used to test the possible behaviours of several functions of a particular component, and we try to keep them fairly short, *under ten seconds* in average. *Functionals*, on the other hand, usually test the interaction between several components, and thus take *longer than 10 seconds*. 
+
+*!!!* It should be noted that while Functional tests can be planned to be quite long, when reporting tests results to the dashboard, tests longer than 30 minutes will appear as failed on time-out grounds.
