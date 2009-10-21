@@ -6,7 +6,7 @@ maidsafe-dht uses gtest to provide a suite of tests that should allow the valida
 
 = Dashboard =
 
-We provide a dashboard website, where the result of test can be uploaded and monitored. Every developer runs an Experimental (make Experimental) before committing code. Once the code is committed several other machines with different platforms run the tests and post the results as well. This way developers can see if any changes made, although valid on some platforms, have affected badly any others. To add a machine to the set of machines already on the dashboard simply run periodically a script that updates the local svn repository and then runs all tests. The results will be posted after that. If you give a descriptive name to your machine it will help a lot.
+We provide a dashboard website, where the result of test can be uploaded and monitored. Every developer runs an Experimental (make Experimental) before committing code. Once the code is committed several other machines with different platforms run the tests and post the results as well. This way developers can see if any changes made, although valid on some platforms, have affected badly any others. To add a machine to the set of machines already on the dashboard simply run periodically a script that updates the local svn repository and then runs all tests. The results will be posted after that. If you give a descriptive name to your machine it will help a lot. The dashboard can be visited at http://dash.maidsafe.net.
 
 = Test suite =
 
