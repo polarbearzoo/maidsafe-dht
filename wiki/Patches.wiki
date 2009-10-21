@@ -14,6 +14,8 @@ This section is dedicated to giving some guidelines that will help contributors 
 
   * If new features are added, tests must be provided to verify the correct functionality and existing tests must be updated accordingly.
 
+  * No patches with code requiring RTTI will be accepted.
+
   * Approved Boost libraries are to be used whenever possible.
 
   * Items in the TODO list are first in line for consideration.
