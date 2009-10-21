@@ -1,0 +1,5 @@
+#summary Testing environment description.
+
+= Introduction =
+
+maidsafe-dht uses gtest to provide a suite of tests that should allow the validation of changes to the code. We by no means claim that the code is a 100% tested, and that is one of our big TODOs right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
