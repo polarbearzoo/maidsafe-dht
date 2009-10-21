@@ -23,13 +23,13 @@ To build the project you will require to have cmake installed and in your path: 
 
 4: run *make* (this will make all)
 
-`run *make tests* - for all tests`
+   run *make tests* - for all tests
 
-`run *make Experimental* (to configure build test and upload to dashboard)`
+   run *make Experimental* (to configure build test and upload to dashboard)
 
-`run *make package* for auto rpm or deb (on windows creates installer)`
+   run *make package* for auto rpm or deb (on windows creates installer)
 
-`run *make install* to install library and API headers`
+   run *make install* to install library and API headers
    
 
 ==*Windows - MinGW*==
@@ -50,13 +50,13 @@ Once you get to this point, you will have an environment which will allow you to
 
 5. Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
 
-6. Install CodeBlocks - you can include MinGW from there if you want - but not necessary. (We would suggest including the contrib nsis stuff for later on - but again not necessary).
+6. Install CodeBlocks. You can include MinGW from there if you want - but not necessary. (We would suggest including the contrib NSIS stuff for later on - but again not necessary).
 
 7. Install NSIS (allow you to build an installer).
 
 8. Open a CMD terminal and go to build/win dir in subversion.
 
-9. Type cmake ..\..\ -G"CodeBlocks - MinGW Makefiles" --> enter, and you will have a CodeBlocks project you can work away with =).
+9. Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a CodeBlocks project you can work away with =).
 
 All usual targets are available - instead of typing make type mingw32-make.
 
