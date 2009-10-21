@@ -28,4 +28,12 @@ We distinguish two different types of tests in this project. We do not do unit t
 *!!!* It should be noted that while Functional tests can be planned to be quite long, when reporting tests results to the dashboard, tests longer than 30 minutes will appear as failed on time-out grounds.
 
 When running cmake there is an option that can be set to run either type of test, or both if you prefer (with the `_` option). Eg.:
-<br>cmake ../../ -DMAIDSAFE_TEST_TYPE=(FUNC | BEH | `_`)
+  <br>cmake ../../ -DMAIDSAFE_TEST_TYPE=(FUNC | BEH | `_`)
+
+= CMake Options =
+
+The option to choose the type of test that may be run has already been mentioned  (-DMAIDSAFE_TEST_TYPE). There are other important options that can be set with the cmake command.
+
+  * -DBOOST_VERSION= This option allows specification of the boost version on the local machine. _none_ can be used if by any chance there is no version specified on the libraries or include directories.
+  * -DGCC_VERSION= This option allows specification of the gcc version in case it isn't gcc43. Many times this reference is built into the name of the compiled libraries and it is thus useful to have it set to the correct details.
+  * -DCMAKE_BUILD_TYPE= Debug and Release are the two main options for this flag. All std output information ceases to be generated on Release mode. The place where the Debug output is collected will depend on whether GLOG is installed.
