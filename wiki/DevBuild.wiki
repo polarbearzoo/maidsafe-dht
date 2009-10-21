@@ -55,7 +55,7 @@ Once you get to this point, you will have an environment which will allow you to
 
 8. Open a CMD terminal and go to build/win dir in subversion.
 
-9. Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a CodeBlocks project you can work away with =).
+9. Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a {{{CodeBlocks}}} project you can work away with =).
 
 All usual targets are available - instead of typing make type mingw32-make.
 
