@@ -4,62 +4,43 @@
 
 Please ensure you have the following required libraries installed:
 
-- boost version 1-40         http://sourceforge.net/projects/boost/files/boost/1.40.0/
-
-- google gtest 1.4           http://code.google.com/p/googletest/downloads/list
-
-- protocol buffers 2.1.0     http://code.google.com/p/protobuf/downloads/list
+- boost version 1-40         http://sourceforge.net/projects/boost/files/boost/1.40.0/<br>
+- google gtest 1.4           http://code.google.com/p/googletest/downloads/list<br>
+- protocol buffers 2.1.0     http://code.google.com/p/protobuf/downloads/list<br>
 
 To build the project you will require to have cmake installed and in your path: http://www.cmake.org/cmake/resources/software.html
 
 =Details=
 ==*Linux*==
 
-1. Download the maidsafe-dht src.
-
-2. cd to build dir for linux (src/build/Linux)
-
-3. run cmake ../../
-
-4. run *make* (this will make all). Other options:
-
-  run *make tests* - for all tests
-
-  run *make Experimental* (to configure build test and upload to dashboard)
-
-  run *make package* for auto rpm or deb (on windows creates installer)
-
-  run *make install* to install library and API headers
+  # Download the maidsafe-dht src.
+  # cd to build dir for linux (src/build/Linux)
+  # Run cmake ../../
+  # Run *make* (this will make all). Other options:
+    * Run *make tests* - for all tests.
+    * Run *make Experimental* (to configure build test and upload to dashboard).
+    * Run *make package* for auto rpm or deb (on windows creates installer).
+    * Run *make install* to install library and API headers.
    
 ==*Windows - MinGW*==
 
-This can run alongside your visual studio implementation - uses c:\usr\lib rather than MSVC c:\lib\ so wont mess with your libraries
+This can run alongside your Visual Studio implementation, since it uses c:\usr\lib rather than MSVC c:\lib\ so this other environment won't mess with your libraries. If you decide to change the location of the libraries and includes to a different location, this will have to be made patent on your local copy of the CMakeList.txt file.
 
-Do all these commands from the BUILD_DIR in your code:
-
-1. Download - wintools.zip
-
-2. Unzip wintools.zip and install tdm-mingw and add to path.(select this at install)
-
-3. Install Msys. When asked for interface with MinGW - select y - then type c:/MinGW as location.
-
-4. This will install a Msys icon on your desktop. Only build MinGW libs with this - i.e. not our programs.
+  # Download wintools.zip from the Downloads tab and unzip it.
+  # Install tdm-mingw and add to path (select this option at install).
+  # Install Msys. When asked for interface with MinGW, select YES, then type c:/MinGW as location.
+  # This will install a Msys icon on your desktop. Only build MinGW libs with this - i.e. not our programs.
 
 Once you get to this point, you will have an environment which will allow you to compile the libraries required with the same commands as if you were in a Linux environment (namely, configure, make, make install). Proceed to build the libraries, which should take a couple of hours, and then continue with the list.
 
-5. Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
-
-6. Install `CodeBlocks`. You can include MinGW from there if you want - but not necessary. (We would suggest including the contrib NSIS stuff for later on - but again not necessary).
-
-7. Install NSIS (allow you to build an installer).
-
-8. Open a CMD terminal and go to build/win dir in subversion.
-
-9. Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a {{{CodeBlocks}}} project you can work away with =).
+  # Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
+  # Install `CodeBlocks`. You can include MinGW from there if you want, but not necessary. (We would suggest including the contrib NSIS stuff for later on, again not necessary).
+  # Install NSIS (This will allow you to build an installer).
+  # Open a CMD terminal and go to build/win dir in subversion.
+  # Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a `CodeBlocks` project you can work away with =).
 
 All usual targets are available - instead of typing make type mingw32-make.
 
 ==*MSVC - deprecated*==
-
 
 We do not offer VS support any more.
