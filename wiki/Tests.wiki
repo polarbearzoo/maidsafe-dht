@@ -26,3 +26,6 @@ Our test suite uses gtest, which is a required library (see Developer Build Inst
 We distinguish two different types of tests in this project. We do not do unit tests _per se_, but either Behavioural (abbreviated BEH) or Functional (FUNC) ones. *Behaviourals* usually are used to test the possible behaviours of several functions of a particular component, and we try to keep them fairly short, *under ten seconds* in average. *Functionals*, on the other hand, usually test the interaction between several components, and thus take *longer than 10 seconds*. 
 
 *!!!* It should be noted that while Functional tests can be planned to be quite long, when reporting tests results to the dashboard, tests longer than 30 minutes will appear as failed on time-out grounds.
+
+When running cmake there is an option that can be set to run either type of test, or both if you prefer (with the `_` option). Eg.:
+<br>cmake ../../ -DMAIDSAFE_TEST_TYPE=(FUNC | BEH | `_`)
