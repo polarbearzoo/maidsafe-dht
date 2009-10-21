@@ -1,23 +1,22 @@
-#summary Immediate TODO list
+#summary Immediate TODO List
 #labels Phase-Requirements,TODO
 
 = Introduction =
 
-Urgent TODO items. We are releasing this code as is at the moment, it *does* work although its messy at the moment. We are cleaning and creating an appropriate interface as a matter of urgency, please feel free to send us patches - *we need your help*.
+We are releasing this code as is at the moment, it *does* work although its messy at the moment. We are cleaning and creating an appropriate interface as a matter of urgency, please feel free to send us patches - *we need your help*.
 
 Thanks
 
-= Details =
+= Items in TODO list =
 
- # Allow bandwidth up/download limits, reporting and quotas.
- # Add checks for change in local and external IP addresses.
- # Implement effective logging (use Google glog for this). We need a way to compile GLOG on MinGW to have logging on Windows.
- # Implement installer for Linux, windows and OS/X (cmake handles this effectively)
- # Remove *boost asio libraries*. They are currently used to obtain the address from local network interfaces.
- # Remove ALL compiler warnings. Most compiler warnings we have are now in the cryptopp library. Removal involves submitting of the patches to the creators 
- # Get to as close to 100% test coverage ASAP
- # Implement a full errno.h file to handle errors more effectively.
+  # Allow bandwidth up/download limits, reporting and quotas.
+  # Add checks for change in local and external IP addresses.
+  # Kademlia caching.
+  # A stable delete operation (we are aware that this would extend the current operations of the DHT).
+  # Compilation GLOG on MinGW to have logging on Windows.
+  # Implement installer for Linux, Windows and OS/X (cmake handles this effectively)
+  # Remove *boost asio libraries*. They are currently used to obtain the address from local network interfaces.
+  # Remove ALL compiler warnings. Most compiler warnings we have are now in the cryptopp library. Removal involves submitting of the patches to the creators and monitoring of their acceptance.
+  # Get to as close to 100% test coverage ASAP.
 
-
-
-As we said before, *all help appreciated*. All work *must* be submitted as a patch and to Google coding standards (we use internally) which can be found at  http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
+As we said before, *all help appreciated*. Please check our *Patches* wiki for guidelines to the quality of the code expected.
