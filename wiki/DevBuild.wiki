@@ -26,18 +26,32 @@ To build the project you will require to have cmake installed and in your path: 
 
 This can run alongside your Visual Studio implementation, since it uses c:\usr\lib rather than MSVC c:\lib\ so this other environment won't mess with your libraries. If you decide to change the location of the libraries and includes to a different location, this will have to be made patent on your local copy of the CMakeList.txt file.
 
-  # Download wintools.zip from the Downloads tab and unzip it.
+  # Download [http://maidsafe-dht.googlecode.com/files/wintools.zip wintools.zip] from the Downloads tab and unzip it.
   # Install tdm-mingw and add to path (select this option at install).
   # Install Msys. When asked for interface with MinGW, select YES, then type c:/MinGW as location.
   # This will install a Msys icon on your desktop. Only build MinGW libs with this - i.e. not our programs.
 
 Once you get to this point, you will have an environment which will allow you to compile the libraries required with the same commands as if you were in a Linux environment (namely, configure, make, make install). Proceed to build the libraries, which should take a couple of hours, and then continue with the list.
 
-  # Make sure the c:/usr/lib dir gets a copy of dokan.lib and dokan.exp (from subversion).
-  # Install `CodeBlocks`. You can include MinGW from there if you want, but not necessary. (We would suggest including the contrib NSIS stuff for later on, again not necessary).
-  # Install NSIS (This will allow you to build an installer).
+Note when building using msys (gtest/protpbuf etc.) please use *./configure --prefix=/c/usr *, for building boost (using bjam and NOT from msys) then please do the following:
+*
+Open command window and cd to freshly unzipped boost root
+
+mkdir Build
+
+bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-iostreams --with-program_options --with-regex --with-signals --with-system --with-thread install --prefix=c:\usr stage
+
+del /Q c:\usr\lib\*boost*mt.lib
+*
+==To actually build the project now==
+
   # Open a CMD terminal and go to build/win dir in subversion.
-  # Type cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`" --> enter, and you will have a `CodeBlocks` project you can work away with =).
+  # Type *cmake ..\..\ -G"`CodeBlocks - MinGW Makefiles`"* --> enter, and you will have a `CodeBlocks` project you can work away with =).
+
+In addition you may want this.
+
+    # Install `CodeBlocks`. You can include MinGW from there if you want, but not necessary. (We would suggest including the contrib NSIS stuff for later on, again not necessary).
+  # Install NSIS (This will allow you to build an installer).
 
 All usual targets are available - instead of typing make type mingw32-make.
 
