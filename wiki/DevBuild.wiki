@@ -33,7 +33,7 @@ This can run alongside your Visual Studio implementation, since it uses c:\usr\l
 
 Once you get to this point, you will have an environment which will allow you to compile the libraries required with the same commands as if you were in a Linux environment (namely, configure, make, make install). Proceed to build the libraries, which should take a couple of hours, and then continue with the list.
 
-Note when building using msys (gtest/protpbuf etc.) please use *./configure --prefix=/c/usr *, Please be aware msys does not handle spaces in paths so download this to a pathi sith no spaces (i.e. not "Documents and settings")
+Note when building using msys (gtest/protpbuf etc.) please use *./configure --prefix=/c/usr *, Please be aware msys does not handle spaces in paths so you MUST build this in a path with no spaces (i.e. not "Documents and settings")
 
 Building boost (using bjam and NOT from msys) then please do the following:
 *
