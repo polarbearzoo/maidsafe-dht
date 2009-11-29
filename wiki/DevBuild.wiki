@@ -41,7 +41,8 @@ To create the Linux environment in Windows:
   # Download the [http://maidsafe-dht.googlecode.com/files/wintools_02.zip zipped bundle] or individual installers above.
   # Install tdm-mingw and add it to your path (select this option during install).
   # Install MSYS. When asked about the interface with MinGW, select YES, then enter `c:\MinGW` as the location.
-Running MSYS now allows you to make and install the above required libraries ([http://code.google.com/p/googletest/downloads/list Google Test], [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers], [http://code.google.com/p/google-glog/downloads/list Google-glog]) as though in a Linux environment. Proceed to build the libraries. In most cases this will usually involve `cd` to the library's root, running `./configure --prefix=/c/usr` then `make` then `make install`.
+Running MSYS now allows you to make and install the above required libraries ([http://code.google.com/p/googletest/downloads/list Google Test], [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers], [http://code.google.com/p/google-glog/downloads/list Google-glog]) as though in a Linux environment.<br>
+Proceed to build the libraries. In most cases this will usually involve `cd` to the library's root, running `./configure --prefix=/c/usr` then `make` then `make install`.
 
 *Note*: The MSYS equivalent of e.g. "`c:\dir`" is "`/c/dir`". Please also be aware that MSYS does not handle spaces in paths so you MUST build this in a path with no spaces (e.g. not "`C:\Documents and Settings`").<br><br>
 
@@ -61,7 +62,7 @@ Running MSYS now allows you to make and install the above required libraries ([h
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
-  # Run `cmake ..\.. -G"CodeBlocks - MinGW Makefiles"`. This will create a CodeBlocks project `src\build\Win\maidsafe-dht.cbp` which will allow you make and install all the targets from within the CodeBlocks IDE.
+  # Run `cmake ..\.. -G"CodeBlocks - MinGW Makefiles"`. This will create a !CodeBlocks project `src\build\Win\maidsafe-dht.cbp` which will allow you make and install all the targets from within the !CodeBlocks IDE.
 If MinGW was added to your path, you should also be able to build the targets from a Windows command terminal:
   * Run `mingw32-make` to make all targets.
   * Run `mingw32-make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
