@@ -1,12 +1,12 @@
 #summary Developer Build Instructions
-  * [WikiSyntax#Introduction Introduction]
-  * [WikiSyntax#Project_Requirements Project Requirements]
-    * [WikiSyntax#Essential Essential]
-    * [WikiSyntax#Recommended,_non-essential Recommended, non-essential]
-    * [WikiSyntax#Creating_the_Required_Build_Environment_in_Windows Creating the Required Build Environment in Windows]
-  * [WikiSyntax#Making_and_Installing_maidsafe-dht Making and Installing maidsafe-dht]
-    * [WikiSyntax#Linux Linux]
-    * [WikiSyntax#Windows Windows]
+  * [WikiSyntax#Introduction]
+  * [WikiSyntax#Project_Requirements]
+    * [WikiSyntax#Essential]
+    * [WikiSyntax#Recommended,_non-essential]
+    * [WikiSyntax#Creating_the_Required_Build_Environment_in_Windows]
+  * [WikiSyntax#Making_and_Installing_maidsafe-dht]
+    * [WikiSyntax#Linux]
+    * [WikiSyntax#Windows]
 
 = Introduction =
 This page explains how to build the maidsafe-dht project and details prerequisites to building the project.
