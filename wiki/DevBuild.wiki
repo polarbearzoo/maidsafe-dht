@@ -26,7 +26,7 @@ This page explains how to build the maidsafe-dht project and details prerequisit
 === Recommended, non-essential ===
   * [http://www.python.org/download Python] (allows a style checker to run)<br><br>
   * [http://code.google.com/p/google-glog/downloads/list Google-glog] (allows logging)<br><br>
-  * [http://www.codeblocks.org/downloads CodeBlocks IDE] (a CodeBlocks project is created after running cmake)<br><br>
+  * [http://www.codeblocks.org/downloads CodeBlocks IDE] (a !CodeBlocks project is created after running cmake)<br><br>
 
 === Creating the Required Build Environment in Windows ===
 If you don't already have the prerequisite components mentioned above, then it may be easiest to create a Linux-esque environment in which to make and install them (with the exception of the Boost libraries, since [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html#get-bjam bjam] can be run from a Windows command terminal).
