@@ -62,7 +62,7 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
-  # Run `cmake ..\.. -G"CodeBlocks - MinGW Makefiles"`. This will create a !CodeBlocks project `src\build\Win\maidsafe-dht.cbp` which will allow you make and install all the targets from within the !CodeBlocks IDE.
+  # Run `cmake ..\.. -G"CodeBlocks - MinGW Makefiles"`. This will create a !CodeBlocks project `src\build\Win\maidsafe-dht.cbp` which will allow you to make and install all the targets from within the !CodeBlocks IDE.
 If MinGW was added to your path, you should also be able to build the targets from a Windows command terminal:
   * Run `mingw32-make` to make all targets.
   * Run `mingw32-make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
