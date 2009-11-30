@@ -51,7 +51,7 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
 === Linux ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
-  # `cd` to build dir for linux (`src/build/Linux`)
+  # `cd` to build dir for Linux (`src/build/Linux`)
   # Run `cmake ../.. -G"CodeBlocks - Unix Makefiles"`
   # Run `make` (this will make all). Other options:
     * Run `make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].

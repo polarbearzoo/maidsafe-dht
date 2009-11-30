@@ -1,4 +1,4 @@
-#summary When Thinking About Submitting A Patch
+#summary When Thinking About Submitting a Patch
 
 = Introduction =
 
@@ -8,14 +8,14 @@ This section is dedicated to giving some guidelines that will help contributors 
 
   * The level of warnings specified in the CMakeList is the one we want to maintain, therefore, make sure that no new warnings appear when compiling.<br>
 
-  * Run a make Experimental and make sure all tests pass before submitting the patch. This will leave proof on the dashboard that the code ran properly at least once on one machine.
+  * Run a `make Experimental` and ensure all tests pass before submitting the patch. This will leave proof on our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard] that the code ran properly at least once on one machine.
 
-  * Part of the tests run in the suite are styling tests. The script (http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py) run to check the style is written in python so you will need the interpreter to run it. Code submitted must pass those tests as well.
+  * We try as far as possible to adhere to the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide]. To that end, some of the tests in the suite run the [http://www.python.org/download Python] script [http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py cpplint.py] to check the coding style, so you will need to have the [http://www.python.org/download Python] interpreter installed to run it. Code submitted must pass those tests as well.
 
   * If new features are added, tests must be provided to verify the correct functionality and existing tests must be updated accordingly.
 
   * No patches with code requiring RTTI will be accepted.
 
-  * Approved Boost libraries are to be used whenever possible.
+  * We anticipate no significant increase in the number of maidsafe-dht dependencies.  However if your patch does introduce further dependencies, we discourage the use of non-approved Boost libraries.
 
-  * Items in the TODO list are first in line for consideration.
+  * Items in the [http://code.google.com/p/maidsafe-dht/wiki/TODO TODO list] are first in line for consideration.

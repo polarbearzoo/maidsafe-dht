@@ -27,7 +27,7 @@ There is no timeout when running the tests directly via the gtest executable (se
 
 = CMake Options =
 
-CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [http://code.google.com/p/maidsafe-dht/wiki/DevBuild Developer Build Instructions].
+CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the !CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [http://code.google.com/p/maidsafe-dht/wiki/DevBuild Developer Build Instructions].
 
 When running CMake there is a settable option which causes CTest to run only Behavioural tests, only Functional tests or both types. To set the test type, run:
     * `cmake ../.. -DMAIDSAFE_TEST_TYPE=BEH` - Behavioural<br>
@@ -65,7 +65,7 @@ For a complete guide to Google Test options please refer to http://code.google.c
   * To filter even further, an individual test name can be used to single it out. Meta-characters such as the `*` symbol can be used in the filter, e.g.:
     * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr`
     * `Debug/bin/TESTbase --gtest_filter=*StrToL*`
-    * `Debug/bin/TESTbase --gtest_filter=*BEH_*` (runs all behavioural tests in TESTbase)
+    * `Debug/bin/TESTbase --gtest_filter=*BEH_*` (runs all behavioural tests in `TESTbase`)
 
   * Repetition and breaking of execution can also be specified when running any of the tests. For repetition, use `-1` to indicate infinite cycles. Using the `gtest_break_on_failure` flag might be particularly useful with the `-1`, e.g.:
     * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr --gtest_repeat=10`
@@ -80,7 +80,7 @@ For a complete guide to CTest options please refer to http://www.itk.org/Wiki/CM
   * To simply list all the tests and their index numbers without executing them, run:
     * `ctest -N`
 
-  * To execute an individual test or a sequence of test (e.g. just test no. 99, or tests no. 23 to 26), run:
+  * To execute an individual test or a sequence of tests (e.g. just test no. 99, or tests no. 23 to 26), run:
     * `ctest -I 99,99`
     * `ctest -I 23,26`
 
