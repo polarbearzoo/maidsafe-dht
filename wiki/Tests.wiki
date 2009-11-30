@@ -1,39 +1,95 @@
 #summary Testing Environment Description
+  * [#Introduction Introduction]
+  * [#Dashboard Dashboard]
+  * [#Types_of_Tests Types of Tests]
+  * [#CMake_Options CMake Options]
+  * [#Building_the_Tests Building the Tests]
+  * [#Running_the_Tests Running the Tests]
+    * [#Running_Google_Test_Executables_Directly Running Google Test Executables Directly]
+    * [#Running_Via_CTest Running Via CTest]
+    * [#Sending_Results_to_the_Dashboard Sending Results to the Dashboard]
 
 = Introduction =
 
-maidsafe-dht uses gtest to provide a suite of tests that should allow the validation of changes to the code. We by no means claim that the code is a 100% tested, and that is one of our big TODOs right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
+maidsafe-dht uses [http://code.google.com/p/googletest/downloads/list Google Test] to provide a suite of tests that should allow the validation of changes to the code. We configure and run the suite using [http://www.cmake.org/Wiki/CMake_Testing_With_CTest CTest]. We by no means claim that the code is 100% tested, and that is one of our big [#TODO TODOs] right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
 
 = Dashboard =
 
-We provide a dashboard website, where the result of test can be uploaded and monitored. Every developer runs an Experimental (make Experimental) before committing code. Once the code is committed several other machines with different platforms run the tests and post the results as well. This way developers can see if any changes made, although valid on some platforms, have affected badly any others. To add a machine to the set of machines already on the dashboard simply run periodically a script that updates the local svn repository and then runs all tests. The results will be posted after that. If you give a descriptive name to your machine it will help a lot. The dashboard can be visited at http://dash.maidsafe.net.
+We provide a [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard website], where the results of tests can be uploaded and monitored. Every developer runs an Experimental (`make Experimental`) before committing code. Once the code is committed several other machines with different platforms run the tests and post their results. This way developers can see if any changes made, although valid on some platforms, have negatively affected any others. To add a machine to the set of machines already on the [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard], simply run periodically a script that updates the local svn repository and then runs all tests. The results will be posted after that. If you give a descriptive name to your machine it will help a lot.
 
-= Test suite =
+= Types of Tests =
 
-Our test suite uses gtest, which is a required library (see Developer Build Instructions). For a complete guide to GTEST options please refer to http://code.google.com/p/googletest/w/list. However we offer the next few pointers:
+We distinguish between two different types of tests in this project. We do not do unit tests _per se_, but either Behavioural or Functional ones. *Behaviourals* usually are used to test the possible behaviours of several functions of a particular component, and we try to keep them fairly short, *under ten seconds* on average. *Functionals*, on the other hand, usually test the interaction between several components, and thus take *longer than ten seconds*.
 
-  # The individual groups of tests that you can compile defining a target are TESTbase, TESTupnp, TESTtransport, TESTrpcprotocol, TESTkademlia, and TESTknode. This means these are possibilities as well for the "make $target" syntax.
-  # Filtering groups or individual tests is possible. Each test file has a distinctive name which allows executing of just the test of that file. To filter even further, the test name itself can be used to single it out. Meta-characters such as the `*` symbol can be used in the filter. Eg.:
-    - TESTbase --gtest_filter=$filterword<br>
-    - TESTbase --gtest_filter=`*`$filterword`*`
-  # Repetition and breaking of execution can also be specified when running any of the tests. For repetition, use -1 to indicate infinite cycles. Using the break on failure flag might be particularly useful with the -1. Eg.:
-    - TESTbase --gtest_filter=$filterword --gtest_repeat=10<br>
-    - TESTbase --gtest_filter=$filterword --gtest_repeat=-1 --gtest_break_on_failure
-  # After adding a test to the suite you will need to run cmake ../../ again so that the ctest inventory is updated. You can check that you new test has been added and will be run when reporting to the dashboard, run ctest -N. This command will display all tests with a number next to them. Once you see a test there, it can also be run with the command ctest -I m,n, where m and n define the interval. If you make m and n equal only that test will be run. For output, add -V to the mix. Full ctest options can be found at http://www.itk.org/Wiki/CMake_Testing_With_CTest.
+*N.B.* When running tests via CTest, behavioural tests timeout after *sixty seconds* and functional ones after *ten minutes*. Any such timeouts when running an Experimental or Continuous build will be reported as failures to the dashboard.  To categorise a test as functional or behavioural, simply name it with a leading `BEH_` or `FUNC_`, make the appropriate target (e.g. `make TESTbase`) and run CMake again.  Tests not named this way will generate a CMake developer warning.
 
-= Types of tests =
-
-We distinguish two different types of tests in this project. We do not do unit tests _per se_, but either Behavioural (abbreviated BEH) or Functional (FUNC) ones. *Behaviourals* usually are used to test the possible behaviours of several functions of a particular component, and we try to keep them fairly short, *under ten seconds* in average. *Functionals*, on the other hand, usually test the interaction between several components, and thus take *longer than 10 seconds*. 
-
-*!!!* It should be noted that while Functional tests can be planned to be quite long, when reporting tests results to the dashboard, tests longer than 30 minutes will appear as failed on time-out grounds.
-
-When running cmake there is an option that can be set to run either type of test, or both if you prefer (with the `_` option). Eg.:
-  <br>cmake ../../ -DMAIDSAFE_TEST_TYPE=(FUNC | BEH | `_`)
+There is no timeout when running the tests directly via the gtest executable (see [#Running_the_Tests Running the Tests] below for more detailed instructions).
 
 = CMake Options =
 
-The option to choose the type of test that may be run has already been mentioned  (-DMAIDSAFE_TEST_TYPE). There are other important options that can be set with the cmake command.
+CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [#DevBuild Developer Build Instructions].
 
-  * -DBOOST_VERSION= This option allows specification of the boost version on the local machine. _none_ can be used if by any chance there is no version specified on the libraries or include directories.
-  * -DGCC_VERSION= This option allows specification of the gcc version in case it isn't gcc43. Many times this reference is built into the name of the compiled libraries and it is thus useful to have it set to the correct details.
-  * -DCMAKE_BUILD_TYPE= Debug and Release are the two main options for this flag. All std output information ceases to be generated on Release mode. The place where the Debug output is collected will depend on whether GLOG is installed.
+When running CMake there is a settable option which causes CTest to run only Behavioural tests, only Functional tests or both types. To set the test type, run:
+    * `cmake ../.. -DMAIDSAFE_TEST_TYPE=BEH` - Behavioural<br>
+    * `cmake ../.. -DMAIDSAFE_TEST_TYPE=FUNC` - Functional<br>
+    * `cmake ../.. -DMAIDSAFE_TEST_TYPE=_` - All (underscore)
+
+Another important CMake setting is whether to build in Debug or Release mode.  All std output information ceases to be generated on Release mode. The place where the Debug output is collected will depend on whether you have [http://code.google.com/p/google-glog/downloads/list Google-glog] installed or not.  To set the build type run:
+    * `cmake ../.. -DCMAKE_BUILD_TYPE=Debug` or<br>
+    * `cmake ../.. -DCMAKE_BUILD_TYPE=Release`
+
+Having set the build type, when test targets are made they will be created in subdirectories of your current maidsafe-dht build dir: either `./Debug/bin` or `./Release/bin`.
+
+= Building the Tests =
+
+Our test executables are [http://code.google.com/p/googletest/downloads/list Google Tests] which can be run directly or via CTest.  The executables are made by running `make $target` in the maidsafe-dht build directory where `$target` is one of the available test groups.  These groups' names generally reflect the directory structure of the source code, so e.g. tests covering the code in `src/base` are part of the target `TESTbase`.  The available test targets are:
+  * `TESTbase`
+  * `TESTkademlia`
+  * `TESTknode` (this is a long functional test suite which repeatedly sets up a small, local Kademlia network)
+  * `TESTnatpmp`
+  * `TESTrpcprotocol`
+  * `TESTtransport`
+  * `TESTupnp`
+After making the target, if a new test has been added, you should run `cmake ../..` again to allow this new test to be picked up by CTest.  Running CMake also warns you if the new test's name conflicts with an existing one (names of individual tests should be unique).<br><br>
+
+= Running the Tests =
+
+As mentioned above, the test executables can be run directly or via CTest.
+
+=== Running Google Test Executables Directly ===
+
+For a complete guide to Google Test options please refer to http://code.google.com/p/googletest/w/list. However we offer these pointers:
+  * Filtering groups of tests is possible. Each test executable has a distinctive name which allows execution of just the tests in that file. So, e.g. to run all the tests in `TESTbase`, simply run:
+    * `Debug/bin/TESTbase` (assuming it was build in Debug mode - see [#CMake_Options CMake Options] above for more info).
+
+  * To filter even further, an individual test name can be used to single it out. Meta-characters such as the `*` symbol can be used in the filter, e.g.:
+    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr`
+    * `Debug/bin/TESTbase --gtest_filter=*StrToL*`
+    * `Debug/bin/TESTbase --gtest_filter=*BEH_*` (runs all behavioural tests in TESTbase)
+
+  * Repetition and breaking of execution can also be specified when running any of the tests. For repetition, use `-1` to indicate infinite cycles. Using the `gtest_break_on_failure` flag might be particularly useful with the `-1`, e.g.:
+    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr --gtest_repeat=10`
+    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr --gtest_repeat=-1 --gtest_break_on_failure`
+
+=== Running Via CTest ===
+
+For a complete guide to CTest options please refer to http://www.itk.org/Wiki/CMake_Testing_With_CTest#Running_Individual_Tests. However we offer these pointers:
+
+  * To run all the tests via CTest, simply call `ctest` from the maidsafe-dht build directory.  If very few or no tests are run, you probably need to re-run `cmake ../..` to allow CTest to add the individual tests to its inventory.  CTest will list or run only the test types specified by the CMake variable MAIDSAFE_TEST_TYPE, i.e. Behavioural (default), Functional, or all tests.  See [#CMake_Options CMake Options] above for further details.
+
+  * To simply list all the tests and their index numbers without executing them, run:
+    * `ctest -N`
+
+  * To execute an individual test or a sequence of test (e.g. just test no. 99, or tests no. 23 to 26), run:
+    * `ctest -I 99,99`
+    * `ctest -I 23,26`
+
+  * To execute tests whose names contain e.g. `StrToLwr`, run:
+    * `ctest -R StrToLwr`
+
+  * To enable output, add -V to the mix, e.g.
+    * `ctest -I 23,26 -V`
+
+=== Sending Results to the Dashboard ===
+
+To run tests which upload their results and output to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard], simply run `make Experimental` from the maidsafe-dht build directory.
