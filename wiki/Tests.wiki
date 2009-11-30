@@ -11,7 +11,7 @@
 
 = Introduction =
 
-maidsafe-dht uses [http://code.google.com/p/googletest/downloads/list Google Test] to provide a suite of tests that should allow the validation of changes to the code. We configure and run the suite using [http://www.cmake.org/Wiki/CMake_Testing_With_CTest CTest]. We by no means claim that the code is 100% tested, and that is one of our big [#TODO TODOs] right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
+maidsafe-dht uses [http://code.google.com/p/googletest/downloads/list Google Test] to provide a suite of tests that should allow the validation of changes to the code. We configure and run the suite using [http://www.cmake.org/Wiki/CMake_Testing_With_CTest CTest]. We by no means claim that the code is 100% tested, and that is one of our big [http://code.google.com/p/maidsafe-dht/wiki/TODO TODOs] right now. So, whether you think you'd like to contribute to the coverage of the project, or add extra functionality, the following comments will be useful when dealing with our tests.
 
 = Dashboard =
 
@@ -27,7 +27,7 @@ There is no timeout when running the tests directly via the gtest executable (se
 
 = CMake Options =
 
-CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [#DevBuild Developer Build Instructions].
+CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [http://code.google.com/p/maidsafe-dht/wiki/DevBuild Developer Build Instructions].
 
 When running CMake there is a settable option which causes CTest to run only Behavioural tests, only Functional tests or both types. To set the test type, run:
     * `cmake ../.. -DMAIDSAFE_TEST_TYPE=BEH` - Behavioural<br>
