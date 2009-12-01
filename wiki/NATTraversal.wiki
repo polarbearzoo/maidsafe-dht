@@ -26,11 +26,11 @@ The procedure is:
   # A sends B a special boostrap message
   # B asks C to try to ping A
   # If ping fails, B asks C to try a rendezvous to A with B acting as rendezvous node
-    # If rendezvous fails, B replies "NOT connected" to A (later we can do tunneling for clients if needed)- END
+    # If rendezvous fails, B replies "NOT connected" to A (later we can do tunneling for clients if needed) - END
     # If rendezvous succeeds, B replies "RENDEZVOUS connected" to A (included in the response is A's external IP and Port) - END
   # If C's ping to A succeeds, B replies "DIRECTLY connected" to A (Directly connected nodes have no rendezvous IP or Port in their contact tuple) - END
 
-Now normal Kademlia boostrapping happens - i.e. A executes an iterative find_node on his own Kademlia ID to populate his routing table and disseminate his details to other nodes' routing tables.
+Now normal Kademlia boostrapping happens, i.e. A executes an iterative find_node on his own Kademlia ID to populate his routing table and disseminate his details to other nodes' routing tables.
 
 
 ----
