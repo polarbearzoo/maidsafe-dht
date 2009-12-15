@@ -19,11 +19,11 @@ This page explains how to build the maidsafe-dht project and details prerequisit
     * program_options
     * system
     * thread
-  If using [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html#get-bjam bjam] to install boost, the following command run from a freshly unzipped boost root dir will build the appropriate libraries:
+  If using [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html#get-bjam bjam] to install boost to `/usr` or `c:\usr`, the following command run from a freshly unzipped boost root dir will build (but not install) bjam and use it to install the appropriate libraries:
   ==== Unix ====
-    * `mkdir Build && ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-system --with-thread install --prefix=/usr stage`<br>
+    * `./bootstrap.sh && mkdir Build && sudo ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-system --with-thread install --prefix=/usr stage`<br>
   ==== Windows ====
-    * `mkdir Build & bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-system --with-thread install --prefix=c:\usr stage`<br>
+    * `bootstrap & mkdir Build & bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-system --with-thread install --prefix=c:\usr stage`<br>
   * [http://code.google.com/p/googletest/downloads/list Google Test (minimum version 1.4)]<br><br>
   * [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers (version 2.1.0)]<br><br>
 
