@@ -1,0 +1,50 @@
+#summary Explanation and operating instructions of kaddemo
+
+= Introduction =
+
+kaddemo is a cli program able to act as a Kademlia node.  Multiple instances of the program can be run to form a Kademlia network.
+
+
+= Details =
+
+Starting a network.
+
+
+First node of the network
+run: ./kaddemostatic --port <port> --externalip <ip> --extrenalport<extport>
+
+<port>: the local port where the node will start listening.  Value is optional, if no argument is passed, a random port is selected.
+<externalip>: external ip to where the node is going to be contacted. If this is a local network, this address is the local ip of the pc where the node is.
+<externalport>: external port to where the node is going to be contacted. If this is a local network, this port is the same as <port>
+
+optional arguments:
+--upnp:  starts upnp to map an external port.  If it fails to map, the node fails to join.
+
+--port_fw: to indicate if the external port has been manually forwarded.
+--noconsole: does not show the interface to perform kademlia operations (ping a node, store a value, load a value) with this node
+--logflepath <path>: path to log file
+--verbose: log is printed to std::cerr
+--kadconfigfile <pathname>: complete pathname of the kadconfig file. This can be used to rejoin the node if it has left the network.
+--refresh_time <time>: number of minutes of the interval to refresh values stored in the node.
+
+
+Subsequent nodes:
+run: ./kaddemostatic --port <port> --bs_ip <bootstrap ip> --bs_port<bootstrap port> --bs_id <boostrap id> --bs_local_ip<bootstrap local ip> --bs_local_port <boostrap local port>
+
+
+<port>: the local port where the node will start listening.  Value is optional, if no argument is passed, a random port is selected.
+<bootstrap ip>: external ip of the bootstrapping node.
+<bootstrap port>: external port of the bootstrapping node.
+<bootstrap id>: node id of the bootstrapping node
+<bootstrap local ip>: local ip of the bootstrapping node.
+<bootstrap local port>: local port of the bootstrapping node.
+
+optional parameters:
+--kadconfigfile <pathname>: complete pathname of the kadconfig file.  If it has bootstrapping contacts, command line arguments with info of the bootstrapping nodes can be ommited. This can be used to rejoin the node if it has left the network.
+--port_fw: to indicate if the external port has been manually forwarded.
+--noconsole: does not show the interface to perform kademlia operations (ping a node, store a value, load a value) with this node
+--logflepath <path>: path to log file
+--verbose: log is printed to std::cerr
+--client: the node acts only as a client, i.e. it does not store any values and its id is not stored in other nodes routing table.  This option can not be used with the noconsole option.
+--refresh_time <time>: number of minutes of the interval to refresh values stored in the node.
+--nodeinfopath <path>: path to where .kaconfig file is written with the nodes info.
