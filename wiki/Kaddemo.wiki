@@ -2,7 +2,7 @@
 
 = Introduction =
 
-kaddemo is a cli program able to act as a Kademlia node.  Multiple instances of the program can be run to form a Kademlia network.
+kaddemo is a cli program able to act as a Kademlia node.  Multiple instances of the program can be run to form a Kademlia network.  It serves as a demo program to drive the maidsafe-dht library, allowing the user to investigate the network implementation's performance.
 
 = Getting Started =
 The kaddemo program can play one of two roles - either a node (an active participant in the network), or a client (doesn't join the network, but is capable of storing to and retrieving from the network at the user's behest).
