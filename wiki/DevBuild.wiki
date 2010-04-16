@@ -5,10 +5,10 @@
     * [#Recommended,_non-essential Recommended, non-essential]
     * [#Creating_the_MinGW_Build_Environment_in_Windows Creating the MinGW Build Environment in Windows]
   * [#Making_and_Installing_maidsafe-dht Making and Installing maidsafe-dht]
-    * [#Linux Linux]
-    * [#Windows_-_MSVC Windows - MSVC]
-    * [#Windows_-_MinGW Windows - MinGW]
-    * [#OSX OSX]
+    * [#Building_on_Linux Building on Linux]
+    * [#Building_on_Windows_-_MSVC Building on Windows - MSVC]
+    * [#Building_on_Windows_-_MinGW Building on Windows - MinGW]
+    * [#Building_on_OSX Building on OSX]
 
 = Introduction =
 This page explains how to build the maidsafe-dht project and details prerequisites to building the project.  For Windows users, the project can be generated for MSVC, or in a MinGW environment for e.g. CodeBlocks.
@@ -63,7 +63,7 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
 
 = Making and Installing maidsafe-dht =
 
-=== Linux ===
+=== Building on Linux ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # `cd` to build dir for Linux (`src/build/Linux`)
@@ -73,7 +73,7 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
     * Run `make package` to create auto rpm or deb.
     * Run `make install` to install the maidsafe-dht library to `/usr/lib` and API headers to `/usr/include`.
 
-=== Windows - MSVC ===
+=== Building on Windows - MSVC ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
@@ -89,7 +89,7 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
     * `cmake ..\.. -G"Visual Studio 10 Win64"`
 This will create an MSVC solution `src\build\Win\maidsafe_dht.sln` which will allow you to make all the targets from within the chosen MSVC IDE.  Building the target `Experimental` will build the full test suite, run it and upload the results to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
 
-=== Windows - MinGW ===
+=== Building on Windows - MinGW ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
@@ -100,7 +100,7 @@ If MinGW was added to your path, you should also be able to build the targets fr
   * Run `mingw32-make package` to create an installer.
   * Run `mingw32-make install` to install the maidsafe-dht library to `c:\usr\lib` and API headers to `c:\usr\include`.
 
-=== OSX ===
+=== Building on OSX ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # `cd` to build dir for OSX (`src/build/OSX`)
@@ -109,4 +109,3 @@ If MinGW was added to your path, you should also be able to build the targets fr
     * Run `make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
     * Run `make package` to create auto rpm or deb.
     * Run `make install` to install the maidsafe-dht library to `/usr/lib` and API headers to `/usr/include`.
-
