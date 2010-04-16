@@ -11,7 +11,7 @@
     * [#Building_on_OSX Building on OSX]
 
 = Introduction =
-This page explains how to build the maidsafe-dht project and details prerequisites to building the project.  For Windows users, the project can be generated for MSVC, or in a MinGW environment for e.g. CodeBlocks.
+This page explains how to build the maidsafe-dht project and details prerequisites to building the project.  For Windows users, the project can be generated for MSVC, or in a MinGW environment for e.g. !CodeBlocks.
 = Project Requirements =
 === Essential ===
   * [http://www.cmake.org/cmake/resources/software.html CMake (minimum version 2.8)] To build the project, CMake must be installed and in your path.<br><br>
