@@ -3,13 +3,15 @@
   * [#Project_Requirements Project Requirements]
     * [#Essential Essential]
     * [#Recommended,_non-essential Recommended, non-essential]
-    * [#Creating_the_Required_Build_Environment_in_Windows Creating the Required Build Environment in Windows]
+    * [#Creating_the_MinGW_Build_Environment_in_Windows Creating the MinGW Build Environment in Windows]
   * [#Making_and_Installing_maidsafe-dht Making and Installing maidsafe-dht]
     * [#Linux Linux]
-    * [#Windows Windows]
+    * [#Windows_-_MSVC Windows - MSVC]
+    * [#Windows_-_MinGW Windows - MinGW]
+    * [#OSX OSX]
 
 = Introduction =
-This page explains how to build the maidsafe-dht project and details prerequisites to building the project.
+This page explains how to build the maidsafe-dht project and details prerequisites to building the project.  For Windows users, the project can be generated for MSVC, or in a MinGW environment for e.g. CodeBlocks.
 = Project Requirements =
 === Essential ===
   * [http://www.cmake.org/cmake/resources/software.html CMake (minimum version 2.8)] To build the project, CMake must be installed and in your path.<br><br>
@@ -17,24 +19,33 @@ This page explains how to build the maidsafe-dht project and details prerequisit
     * date_time
     * filesystem
     * program_options
+    * regex
     * system
     * thread
-  If using [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html#get-bjam bjam] to install boost to `/usr` or `c:\usr`, the following command run from a freshly unzipped boost root dir will build (but not install) bjam and use it to install the appropriate libraries:
+  If using [http://www.boost.org/doc/libs/1_42_0/more/getting_started/windows.html#get-bjam bjam] to build boost, the following commands run from a freshly unzipped boost root directory should work:
   ==== Unix ====
-    * `./bootstrap.sh && mkdir Build && sudo ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-thread install --prefix=/usr stage`<br>
-  ==== Windows ====
-    * `bootstrap & mkdir Build & bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-thread install --prefix=c:\usr stage`<br>
-  * [http://code.google.com/p/googletest/downloads/list Google Test (minimum version 1.4)]<br><br>
-  * [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers (minimum version 2.1.0)]<br><br>
+    * `./bootstrap.sh` (creates the bjam executable in the boost directory which is used to build and install the boost libraries and headers)
+    * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
+    * `sudo ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-thread install --prefix=/usr stage` (builds the libraries, copies them to `/usr/lib` and copies the headers to `/usr/include`)<br>
+  ==== Windows - MSVC ====
+    * `bootstrap` (creates the bjam executable in the boost directory which is used to build the boost libraries and headers)
+    * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
+    * `bjam toolset=msvc link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-thread define=_BIND_TO_CURRENT_MFC_VERSION=1 define=_BIND_TO_CURRENT_CRT_VERSION=1 stage` (builds the libraries)<br>
+  ==== Windows - MinGW ====
+    * `bootstrap` (creates the bjam executable in the boost directory which is used to build the boost libraries and headers)
+    * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
+    * `bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-thread install --prefix=c:\usr stage` (builds the libraries, copies them to `c:\usr\lib` and copies the headers to `c:\usr\include`)<br>
+  * [http://code.google.com/p/googletest/downloads/list Google Test (minimum version 1.4)]<br>If using MSVC, ensure you build Gtest from the solution `gtest-md.sln` and not `gtest.sln` or the Gtest libraries will link to Microsoft C runtime libraries which are incompatible with those used elsewhere in maidsafe-dht.  Also, ensure Debug and Release targets are both built.<br><br>
+  * [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers (minimum version 2.1.0)]<br>Again, if using MSVC, ensure Debug and Release targets are both built.<br><br>
 
 === Recommended, non-essential ===
   * [http://www.python.org/download Python] (allows a style checker to run)<br><br>
   * [http://code.google.com/p/google-glog/downloads/list Google-glog] (allows logging)<br><br>
-  * [http://www.codeblocks.org/downloads CodeBlocks IDE] (a !CodeBlocks project is created after running cmake)<br><br>
+  * [http://www.codeblocks.org/downloads CodeBlocks IDE] (a !CodeBlocks project is created after running cmake unless MSVC is selected as the cmake Generator)<br><br>
 
-=== Creating the Required Build Environment in Windows ===
-If you don't already have the prerequisite components mentioned above, then it may be easiest to create a Linux-esque environment in which to make and install them (with the exception of the Boost libraries, since [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html#get-bjam bjam] can be run from a Windows command terminal).
-This can run alongside a standard Visual Studio implementation, since it uses `c:\usr\lib` rather than MSVC's `c:\lib` so this other environment won't mess with your libraries. If you decide to install the libraries and headers to a location other than `c:\usr`, this will have to be made patent on your local copy of the CMakeList.txt file.
+=== Creating the MinGW Build Environment in Windows ===
+If you intend to use MSVC, then this section is not applicable.  Otherwise, if you're building in Windows, you'll need to create a Linux-esque environment in which to make and install the prerequisites (with the exception of the Boost libraries, since [http://www.boost.org/doc/libs/1_42_0/more/getting_started/windows.html#get-bjam bjam] can be run from a Windows command terminal).
+This can run alongside a standard Visual Studio implementation, since it uses `c:\usr\lib` rather than MSVC's `c:\lib` so this other environment won't mess with your libraries. If you decide to install the libraries and headers to a location other than `c:\usr`, cmake will require these paths entered as variables when running the cmake command.
 To help create this environment we have bundled the following installers into this [http://maidsafe-dht.googlecode.com/files/wintools_02.zip zipped folder].
   * [http://www.cmake.org/cmake/resources/software.html CMake 2.8.0]
   * [http://www.codeblocks.org/downloads CodeBlocks 8.02]
@@ -62,7 +73,23 @@ Proceed to build the libraries. In most cases this will usually involve `cd` to 
     * Run `make package` to create auto rpm or deb.
     * Run `make install` to install the maidsafe-dht library to `/usr/lib` and API headers to `/usr/include`.
 
-=== Windows ===
+=== Windows - MSVC ===
+
+  # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
+  # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
+  # Run one of the following commands appropriate to your MSVC version:
+    * `cmake ..\.. -G"Visual Studio 6"`
+    * `cmake ..\.. -G"Visual Studio 7"`
+    * `cmake ..\.. -G"Visual Studio 7 .NET 2003"`
+    * `cmake ..\.. -G"Visual Studio 8 2005"`
+    * `cmake ..\.. -G"Visual Studio 8 2005 Win64"`
+    * `cmake ..\.. -G"Visual Studio 9 2008"`
+    * `cmake ..\.. -G"Visual Studio 9 2008 Win64"`
+    * `cmake ..\.. -G"Visual Studio 10"`
+    * `cmake ..\.. -G"Visual Studio 10 Win64"`
+This will create an MSVC solution `src\build\Win\maidsafe_dht.sln` which will allow you to make all the targets from within the chosen MSVC IDE.  Building the target `Experimental` will build the full test suite, run it and upload the results to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
+
+=== Windows - MinGW ===
 
   # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
   # Open a Windows command terminal and `cd` to build dir for Windows (`src\build\Win`)
@@ -72,4 +99,14 @@ If MinGW was added to your path, you should also be able to build the targets fr
   * Run `mingw32-make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
   * Run `mingw32-make package` to create an installer.
   * Run `mingw32-make install` to install the maidsafe-dht library to `c:\usr\lib` and API headers to `c:\usr\include`.
-*Note*: We do not offer MSVC support any more.
+
+=== OSX ===
+
+  # Download the [http://code.google.com/p/maidsafe-dht/source/checkout maidsafe-dht src].
+  # `cd` to build dir for OSX (`src/build/OSX`)
+  # Run `cmake ../.. -G"CodeBlocks - Unix Makefiles"`
+  # Run `make` (this will make all). Other options:
+    * Run `make Experimental` to configure, build, test and upload to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard].
+    * Run `make package` to create auto rpm or deb.
+    * Run `make install` to install the maidsafe-dht library to `/usr/lib` and API headers to `/usr/include`.
+
