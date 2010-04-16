@@ -4,6 +4,9 @@
 
 kaddemo is a cli program able to act as a Kademlia node.  Multiple instances of the program can be run to form a Kademlia network.  It serves as a demo program to drive the maidsafe-dht library, allowing the user to investigate the network implementation's performance.
 
+= maidsafe test network =
+We have set up some nodes as a test network. The information of the bootstrapping nodes is in a file ( bootstrapping_nodes.txt) in the Downloads section. See below for instruction to start a node.  You can start a node as a client and no values will be stored into it, but it will be able to store values to the network and find values from it.
+
 = Getting Started =
 The kaddemo program can play one of two roles - either a node (an active participant in the network), or a client (doesn't join the network, but is capable of storing to and retrieving from the network at the user's behest).
 
