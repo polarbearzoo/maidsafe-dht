@@ -40,7 +40,7 @@ This page explains how to build the maidsafe-dht project and details prerequisit
 
 === Recommended, non-essential ===
   * [http://www.python.org/download Python] (allows a style checker to run)<br><br>
-  * [http://code.google.com/p/google-glog/downloads/list Google-glog] (allows logging)<br><br>
+  * [http://code.google.com/p/google-glog/downloads/list Google-glog] (allows logging)<br>If using MSVC, ensure you build the target `libglog_static` in both Debug and Release modes.  Glog cannot currently be built on Windows using MinGW.<br><br>
   * [http://www.codeblocks.org/downloads CodeBlocks IDE] (a !CodeBlocks project is created after running cmake unless MSVC is selected as the cmake Generator)<br><br>
 
 === Creating the MinGW Build Environment in Windows ===
