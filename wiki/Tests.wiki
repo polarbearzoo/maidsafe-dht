@@ -27,30 +27,26 @@ There is no timeout when running the tests directly via the gtest executable (se
 
 = CMake Options =
 
-CMake should be run from the maidsafe-dht build directory appropriate to your environment, either `src\build\Win`, `src/build/Linux`, or `src/build/OSX`. The actual CMakeLists.txt file is in the `src` directory however, so the command `cmake ../..` is used.  The first time CMake is run you should specify the !CodeBlocks generator by using `cmake ../.. -G"CodeBlocks - MinGW Makefiles"` on Windows or `cmake ../.. -G"CodeBlocks - Unix Makefiles"` on Linux.  For full details on creating the build environment, see [http://code.google.com/p/maidsafe-dht/wiki/DevBuild Developer Build Instructions].
+For full details on creating the build environment using CMake, see [http://code.google.com/p/maidsafe-dht/wiki/DevBuild Developer Build Instructions].
 
 When running CMake there is a settable option which causes CTest to run only Behavioural tests, only Functional tests or both types. To set the test type, run:
     * `cmake ../.. -DMAIDSAFE_TEST_TYPE=BEH` - Behavioural<br>
     * `cmake ../.. -DMAIDSAFE_TEST_TYPE=FUNC` - Functional<br>
     * `cmake ../.. -DMAIDSAFE_TEST_TYPE=_` - All (underscore)
 
-Another important CMake setting is whether to build in Debug or Release mode.  All std output information ceases to be generated on Release mode. The place where the Debug output is collected will depend on whether you have [http://code.google.com/p/google-glog/downloads/list Google-glog] installed or not.  To set the build type run:
-    * `cmake ../.. -DCMAKE_BUILD_TYPE=Debug` or<br>
-    * `cmake ../.. -DCMAKE_BUILD_TYPE=Release`
-
-Having set the build type, when test targets are made they will be created in subdirectories of your current maidsafe-dht build dir: either `./Debug/bin` or `./Release/bin`.
-
 = Building the Tests =
 
-Our test executables are [http://code.google.com/p/googletest/downloads/list Google Tests] which can be run directly or via CTest.  The executables are made by running `make $target` in the maidsafe-dht build directory where `$target` is one of the available test groups.  These groups' names generally reflect the directory structure of the source code, so e.g. tests covering the code in `src/base` are part of the target `TESTbase`.  The available test targets are:
+Our test executables are [http://code.google.com/p/googletest/downloads/list Google Tests] which can be run directly or via CTest.  The executables are made by running `make $target` in the maidsafe-dht build directory where `$target` is one of the available test groups, or via your chosen IDE.  These groups' names generally reflect the directory structure of the source code, so e.g. tests covering the code in `src/maidsafe/base` are part of the target `TESTbase`.  The available test targets are:
   * `TESTbase`
+  * `TESTboost`
   * `TESTkademlia`
-  * `TESTknode` (this is a long functional test suite which repeatedly sets up a small, local Kademlia network)
+  * `TESTknode` (this is a long functional test suite which sets up a small, local Kademlia network)
   * `TESTnatpmp`
   * `TESTrpcprotocol`
   * `TESTtransport`
   * `TESTupnp`
-After making the target, if a new test has been added, you should run `cmake ../..` again to allow this new test to be picked up by CTest.  Running CMake also warns you if the new test's name conflicts with an existing one (names of individual tests should be unique).<br><br>
+  * `cryptest` (the test suite provided as part of [http://www.cryptopp.com Crypto++])
+If you add a new test, re-running CMake warns you if the new test's name conflicts with an existing one (names of individual tests should be unique).<br><br>
 
 = Running the Tests =
 
@@ -60,16 +56,16 @@ As mentioned above, the test executables can be run directly or via CTest.
 
 For a complete guide to Google Test options please refer to http://code.google.com/p/googletest/w/list. However we offer these pointers:
   * Filtering groups of tests is possible. Each test executable has a distinctive name which allows execution of just the tests in that file. So, e.g. to run all the tests in `TESTbase`, simply run:
-    * `Debug/bin/TESTbase` (assuming it was build in Debug mode - see [#CMake_Options CMake Options] above for more info).
+    * `build/Linux/Debug/bin/TESTbase` (assuming it was build in Debug mode for Linux - see [#CMake_Options CMake Options] above for more info).
 
   * To filter even further, an individual test name can be used to single it out. Meta-characters such as the `*` symbol can be used in the filter, e.g.:
-    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr`
-    * `Debug/bin/TESTbase --gtest_filter=*StrToL*`
-    * `Debug/bin/TESTbase --gtest_filter=*BEH_*` (runs all behavioural tests in `TESTbase`)
+    * `build/Linux/Debug/bin/TESTbase --gtest_filter=*BEH_BASE_RandomString`
+    * `build/Linux/Debug/bin/TESTbase --gtest_filter=*RandomStri*`
+    * `build/Linux/Debug/bin/TESTbase --gtest_filter=*BEH_*` (runs all behavioural tests in `TESTbase`)
 
   * Repetition and breaking of execution can also be specified when running any of the tests. For repetition, use `-1` to indicate infinite cycles. Using the `gtest_break_on_failure` flag might be particularly useful with the `-1`, e.g.:
-    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr --gtest_repeat=10`
-    * `Debug/bin/TESTbase --gtest_filter=*BEH_BASE_TestStrToLwr --gtest_repeat=-1 --gtest_break_on_failure`
+    * `build/Linux/Debug/bin/TESTbase --gtest_filter=*BEH_BASE_RandomString --gtest_repeat=10`
+    * `build/Linux/Debug/bin/TESTbase --gtest_filter=*BEH_BASE_RandomString --gtest_repeat=-1 --gtest_break_on_failure`
 
 === Running Via CTest ===
 
@@ -92,4 +88,4 @@ For a complete guide to CTest options please refer to http://www.itk.org/Wiki/CM
 
 === Sending Results to the Dashboard ===
 
-To run tests which upload their results and output to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard], simply run `make Experimental` from the maidsafe-dht build directory.
+To run tests which upload their results and output to our [http://dash.maidsafe.net/index.php?project=maidsafe-dht dashboard], simply build the target `Experimental` in your chosen IDE or run `make Experimental` from the maidsafe-dht build directory.
