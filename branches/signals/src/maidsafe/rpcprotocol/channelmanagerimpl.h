@@ -35,7 +35,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "boost/shared_ptr.hpp"
 #include "google/protobuf/service.h"
 #include "google/protobuf/message.h"
-
 #include "maidsafe/base/calllatertimer.h"
 #include "maidsafe/maidsafe-dht.h"
 #include "maidsafe/rpcprotocol/channelimpl.h"
@@ -109,6 +108,8 @@ class ChannelManagerImpl {
   RpcStatsMap rpc_timings_;
   boost::condition_variable delete_channels_cond_;
   boost::uint16_t online_status_id_;
+  bs2::connection rpc_connection_;
+  bs2::connection data_sent_connection_;
 };
 }  // namespace rpcprotocol
 #endif  // MAIDSAFE_RPCPROTOCOL_CHANNELMANAGERIMPL_H_

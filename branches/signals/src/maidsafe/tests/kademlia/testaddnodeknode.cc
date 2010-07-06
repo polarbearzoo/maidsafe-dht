@@ -111,10 +111,10 @@ class TestKnodes : public testing::Test {
       transports_.push_back(id);
       ch_managers_.push_back(new
         rpcprotocol::ChannelManager(trans_handlers_[i]));
-      ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
-      ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(
-                  boost::bind(&MessageHandler::OnDeadRendezvousServer,
-                              msg_handlers_[i], _1, _2, _3)));
+//       ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
+//       ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(
+//                   boost::bind(&MessageHandler::OnDeadRendezvousServer,
+//                               msg_handlers_[i], _1, _2, _3)));
       ASSERT_EQ(0, trans_handlers_[i]->Start(0, transports_[i]));
       printf("Listening port for Transport %d: %d\n", transports_[i],
              trans_handlers_[i]->listening_port(transports_[i]));

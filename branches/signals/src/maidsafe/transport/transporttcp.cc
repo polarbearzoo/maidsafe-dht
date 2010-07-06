@@ -50,9 +50,9 @@ TransportTCP::~TransportTCP() {
 int TransportTCP::Start(const boost::uint16_t &port) {
   if (!stop_)
     return 1;
-  if ((rpc_message_notifier_.empty() && message_notifier_.empty()) ||
-       send_notifier_.empty())
-    return 1;
+//   if ((rpc_message_notifier_.empty() && message_notifier_.empty()) ||
+//        send_notifier_.empty())
+//     return 1;
   listening_port_ = port;
   boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(),
     listening_port_);
@@ -99,9 +99,9 @@ int TransportTCP::Start(const boost::uint16_t &port) {
 int TransportTCP::StartLocal(const boost::uint16_t &port) {
   if (!stop_)
     return 1;
-  if ((rpc_message_notifier_.empty() && message_notifier_.empty()) ||
-       send_notifier_.empty())
-    return 1;
+//   if ((rpc_message_notifier_.empty() && message_notifier_.empty()) ||
+//        send_notifier_.empty())
+//     return 1;
   listening_port_ = port;
   boost::asio::ip::tcp::endpoint endpoint(
     boost::asio::ip::address_v4::loopback(),
@@ -303,7 +303,7 @@ void TransportTCP::HandleConnSend(const boost::uint32_t &connection_id,
   }
   if (rpc_sent) {
     boost::mutex::scoped_lock guard(send_handler_mutex_);
-    send_notifier_(connection_id, result);
+    SignalSent_(connection_id, result);
   }
   {
     boost::mutex::scoped_lock guard(conn_mutex_);
@@ -338,11 +338,11 @@ void TransportTCP::HandleConnRecv(const std::string &msg,
   if (t_msg.ParseFromString(msg)) {
     if (t_msg.has_rpc_msg() && !rpc_message_notifier_.empty()) {
       boost::mutex::scoped_lock guard(rpcmsg_handler_mutex_);
-      rpc_message_notifier_(t_msg.rpc_msg(), connection_id, transport_id_, 0.0);
+      SignalRPCMessageReceived_(t_msg.rpc_msg(), connection_id, 0.0);
     }
   } else if (!message_notifier_.empty()) {
     boost::mutex::scoped_lock guard(msg_handler_mutex_);
-    message_notifier_(msg, connection_id, transport_id_, 0.0);
+    SignalMessageReceived_(msg, connection_id, 0.0);
   } else {
     LOG(WARNING) << "TCP(" << listening_port_ <<
         ") Invalid Message received" << std::endl;

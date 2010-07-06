@@ -56,7 +56,12 @@ ChannelManagerImpl::ChannelManagerImpl(
           channels_ids_(),
           rpc_timings_(),
           delete_channels_cond_(),
-          online_status_id_(0) {}
+          online_status_id_(0) {
+  rpc_connection_ = transport_handler_->connect_rpc_message_recieved(
+    boost::bind(&ChannelManagerImpl::MessageArrive, this, _1, _2, _3, _4));
+  data_sent_connection_ = transport_handler_->connect_sent((boost::bind(
+        &ChannelManagerImpl::RequestSent, this, _1, _2)));
+  }
 
 ChannelManagerImpl::~ChannelManagerImpl() {
   Stop();
@@ -381,17 +386,17 @@ void ChannelManagerImpl::OnlineStatusChanged(const bool&) {
   // TODO(anyone) handle connection loss
 }
 
-bool ChannelManagerImpl::RegisterNotifiersToTransport() {
-  if (is_started_) {
-    return true;  // Everything has already been registered
-  }
-  if (transport_handler_->RegisterOnRPCMessage(
-    boost::bind(&ChannelManagerImpl::MessageArrive, this, _1, _2, _3, _4))) {
-      return transport_handler_->RegisterOnSend(boost::bind(
-        &ChannelManagerImpl::RequestSent, this, _1, _2));
-  }
-  return false;
-}
+// bool ChannelManagerImpl::RegisterNotifiersToTransport() {
+//   if (is_started_) {
+//     return true;  // Everything has already been registered
+//   }
+//    if (transport_handler_->RegisterOnRPCMessage(
+//      boost::bind(&ChannelManagerImpl::MessageArrive, this, _1, _2, _3, _4))) {
+//   return transport_handler_->RegisterOnSend(boost::bind(
+//         &ChannelManagerImpl::RequestSent, this, _1, _2));
+//    }
+//   return false;
+// }
 
 RpcStatsMap ChannelManagerImpl::RpcTimings() {
   boost::mutex::scoped_lock lock(timings_mutex_);

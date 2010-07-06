@@ -85,10 +85,16 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <boost/cstdint.hpp>
 #include <boost/function.hpp>
+#include <boost/signals2/signal.hpp>
+#include <boost/filesystem.hpp>
+
 #include <string>
 
-
-
+/*******************************************************************************
+ * Global Aliases                                                                     *
+ ******************************************************************************/
+namespace  bs2 = boost::signals2;
+namespace  bfs = boost::filesystem;
 /*******************************************************************************
  * Kademlia Layer                                                              *
  ******************************************************************************/

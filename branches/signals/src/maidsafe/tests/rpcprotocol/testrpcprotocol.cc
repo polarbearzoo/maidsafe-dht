@@ -37,7 +37,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "maidsafe/rpcprotocol/channelmanager-api.h"
 #include "maidsafe/transport/transport-api.h"
 #include "maidsafe/transport/transportudt.h"
-#include "maidsafe/transport/transporthandler-api.h"
 #include "maidsafe/tests/rpcprotocol/testservices.pb.h"
 
 class PingTestService : public tests::PingTest {
@@ -206,14 +205,14 @@ class RpcProtocolTest : public testing::Test {
   }
   virtual void SetUp() {
     ASSERT_TRUE(server_chann_manager->RegisterNotifiersToTransport());
-    ASSERT_TRUE(server_transport_handler->RegisterOnServerDown(boost::bind(
-      &HandleDeadServer, _1, _2, _3)));
+//     ASSERT_TRUE(server_transport_handler->RegisterOnServerDown(boost::bind(
+//       &HandleDeadServer, _1, _2, _3)));
     ASSERT_EQ(0, server_transport_handler->Start(0, server_transport_id));
     server_transport_handler->StartPingRendezvous(true, "", 0,
       server_transport_id);
     ASSERT_TRUE(client_chann_manager->RegisterNotifiersToTransport());
-    ASSERT_TRUE(client_transport_handler->RegisterOnServerDown(boost::bind(
-      &HandleDeadServer, _1, _2, _3)));
+//     ASSERT_TRUE(client_transport_handler->RegisterOnServerDown(boost::bind(
+//       &HandleDeadServer, _1, _2, _3)));
     ASSERT_EQ(0, client_transport_handler->Start(0, client_transport_id));
     client_transport_handler->StartPingRendezvous(true, "", 0,
       client_transport_id);
@@ -808,8 +807,8 @@ TEST_F(RpcProtocolTest, FUNC_RPC_RestartLocalTransport) {
   // starting transport
   ASSERT_TRUE(chman.RegisterNotifiersToTransport());
   chman.RegisterChannel(service.GetDescriptor()->name(), &service_channel);
-  ASSERT_TRUE(local_transport_handler.RegisterOnServerDown(boost::bind(
-      &HandleDeadServer, _1, _2, _3)));
+//   ASSERT_TRUE(local_transport_handler.RegisterOnServerDown(boost::bind(
+//       &HandleDeadServer, _1, _2, _3)));
   ASSERT_EQ(0, local_transport_handler.Start(0, local_transport_id));
   ASSERT_EQ(0, chman.Start());
   local_transport_handler.StartPingRendezvous(true, "", 0, local_transport_id);

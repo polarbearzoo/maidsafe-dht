@@ -117,23 +117,23 @@ class TransportUDT : public Transport {
            const bool &new_socket);
   int Start(const boost::uint16_t & port);
   int StartLocal(const boost::uint16_t &port);
-  bool RegisterOnRPCMessage(
-      boost::function<void(const rpcprotocol::RpcMessage&,
-                           const boost::uint32_t&,
-                           const boost::int16_t&,
-                           const float &)> on_rpcmessage);
-  bool RegisterOnMessage(
-      boost::function<void(const std::string&,
-                           const boost::uint32_t&,
-                           const boost::int16_t&,
-                           const float &)> on_message);
-  bool RegisterOnSend(
-      boost::function<void(const boost::uint32_t&,
-                           const bool&)> on_send);
-  bool RegisterOnServerDown(
-      boost::function<void(const bool&,
-                           const std::string&,
-                           const boost::uint16_t&)> on_server_down);
+//   bool RegisterOnRPCMessage(
+//       boost::function<void(const rpcprotocol::RpcMessage&,
+//                            const boost::uint32_t&,
+//                            const boost::int16_t&,
+//                            const float &)> on_rpcmessage);
+//   bool RegisterOnMessage(
+//       boost::function<void(const std::string&,
+//                            const boost::uint32_t&,
+//                            const boost::int16_t&,
+//                            const float &)> on_message);
+//   bool RegisterOnSend(
+//       boost::function<void(const boost::uint32_t&,
+//                            const bool&)> on_send);
+//   bool RegisterOnServerDown(
+//       boost::function<void(const bool&,
+//                            const std::string&,
+//                            const boost::uint16_t&)> on_server_down);
   void CloseConnection(const boost::uint32_t &connection_id);
   void Stop();
   inline bool is_stopped() const { return stop_; }
@@ -157,6 +157,7 @@ class TransportUDT : public Transport {
   TransportUDT& operator=(const TransportUDT&);
   TransportUDT(TransportUDT&);
   void AddIncomingConnection(UdtSocket udt_socket);
+  void ReceiveData(UdtSocket *receiver);
   void AddIncomingConnection(UdtSocket udt_socket,
                              boost::uint32_t *connection_id);
   void HandleRendezvousMsgs(const HolePunchingMsg &message);
@@ -171,16 +172,6 @@ class TransportUDT : public Transport {
   void ReceiveHandler();
   void MessageHandler();
   volatile bool stop_;
-  boost::function<void(const rpcprotocol::RpcMessage&,
-                       const boost::uint32_t&,
-                       const boost::int16_t&,
-                       const float&)> rpc_message_notifier_;
-  boost::function<void(const std::string&,
-                       const boost::uint32_t&,
-                       const boost::int16_t&,
-                       const float&)> message_notifier_;
-  boost::function<void(const bool&, const std::string&,
-                       const boost::uint16_t&)> server_down_notifier_;
   boost::shared_ptr<boost::thread> accept_routine_,
                                    recv_routine_,
                                    send_routine_,

@@ -76,10 +76,10 @@ class TestRefresh : public testing::Test {
           trans_handlers_[i].get(), VAULT, testK_, kAlpha, kBeta,
           testRefresh_, "", "", false, false)));
       nodes_[i]->set_transport_id(transport_id);
-      ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
-      ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(boost::bind(
-        &kad::KNode::HandleDeadRendezvousServer, nodes_[i].get(), _1)));
-      EXPECT_EQ(0, trans_handlers_[i]->Start(0, transport_id));
+//       ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
+//       ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(boost::bind(
+//         &kad::KNode::HandleDeadRendezvousServer, nodes_[i].get(), _1)));
+//       EXPECT_EQ(0, trans_handlers_[i]->Start(0, transport_id));
       EXPECT_EQ(0, ch_managers_[i]->Start());
       datadirs_.push_back(datadir);
     }
@@ -233,9 +233,9 @@ TEST_F(TestRefresh, FUNC_KAD_NewNodeinKClosest) {
   KNode node(&ch_manager, &trans_handler, VAULT, testK_, kAlpha, kBeta,
     testRefresh_, "", "", false, false);
   node.set_transport_id(transport_id);
-  ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
-  ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
-      &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
+//   ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
+//   ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
+//       &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
   ASSERT_EQ(0, trans_handler.Start(0, transport_id));
   ASSERT_EQ(0, ch_manager.Start());
   std::string kconfig_file1 = local_dir + "/.kadconfig";
@@ -314,9 +314,9 @@ class TestRefreshSignedValues : public testing::Test {
           trans_handlers_[i].get(), VAULT, testK_, kAlpha, kBeta, testRefresh_,
           keys.private_key(), keys.public_key(), false, false)));
       nodes_[i]->set_transport_id(transport_id);
-      ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
-      ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(boost::bind(
-        &kad::KNode::HandleDeadRendezvousServer, nodes_[i].get(), _1)));
+//       ASSERT_TRUE(ch_managers_[i]->RegisterNotifiersToTransport());
+//       ASSERT_TRUE(trans_handlers_[i]->RegisterOnServerDown(boost::bind(
+//         &kad::KNode::HandleDeadRendezvousServer, nodes_[i].get(), _1)));
       EXPECT_EQ(0, trans_handlers_[i]->Start(0, transport_id));
       EXPECT_EQ(0, ch_managers_[i]->Start());
       datadirs_.push_back(datadir);
@@ -518,9 +518,9 @@ TEST_F(TestRefreshSignedValues, FUNC_KAD_NewRSANodeinKClosest) {
   KNode node(&ch_manager, &trans_handler, VAULT, testK_, kAlpha, kBeta,
       testRefresh_, keys.private_key(), keys.public_key(), false, false);
   node.set_transport_id(transport_id);
-  ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
-  ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
-      &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
+//   ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
+//   ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
+//       &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
   ASSERT_EQ(0, trans_handler.Start(0, transport_id));
   ASSERT_EQ(0, ch_manager.Start());
   std::string kconfig_file1 = local_dir + "/.kadconfig";
@@ -607,9 +607,9 @@ TEST_F(TestRefreshSignedValues, FUNC_KAD_InformOfDeletedValue) {
   KNode node(&ch_manager, &trans_handler, VAULT, testK_, kAlpha,
     kBeta, testRefresh_, keys.private_key(), keys.public_key(), false, false);
   node.set_transport_id(transport_id);
-  ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
-  ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
-      &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
+//   ASSERT_TRUE(ch_manager.RegisterNotifiersToTransport());
+//   ASSERT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
+//       &kad::KNode::HandleDeadRendezvousServer, &node, _1)));
   ASSERT_EQ(0, trans_handler.Start(0, transport_id));
   ASSERT_EQ(0, ch_manager.Start());
   std::string kconfig_file1 = local_dir + "/.kadconfig";

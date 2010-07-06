@@ -128,22 +128,22 @@ class TransportHandler {
                        const boost::int16_t &transport_id);
   bool IsPortAvailable(const boost::uint16_t &port,
                        const boost::int16_t &transport_id);
-  bool RegisterOnMessage(
-      boost::function<void(const std::string&,
-                           const boost::uint32_t&,
-                           const boost::int16_t&,
-                           const float &)> on_message);
-  bool RegisterOnRPCMessage(
-      boost::function<void(const rpcprotocol::RpcMessage&,
-                           const boost::uint32_t&,
-                           const boost::int16_t&,
-                           const float &)> on_rpcmessage);
-  bool RegisterOnSend(
-      boost::function<void(const boost::uint32_t&, const bool&)> on_send);
-  bool RegisterOnServerDown(
-      boost::function<void(const bool&,
-                           const std::string&,
-                           const boost::uint16_t&)> on_server_down);
+//   bool RegisterOnMessage(
+//       boost::function<void(const std::string&,
+//                            const boost::uint32_t&,
+//                            const boost::int16_t&,
+//                            const float &)> on_message);
+//   bool RegisterOnRPCMessage(
+//       boost::function<void(const rpcprotocol::RpcMessage&,
+//                            const boost::uint32_t&,
+//                            const boost::int16_t&,
+//                            const float &)> on_rpcmessage);
+//   bool RegisterOnSend(
+//       boost::function<void(const boost::uint32_t&, const bool&)> on_send);
+//   bool RegisterOnServerDown(
+//       boost::function<void(const bool&,
+//                            const std::string&,
+//                            const boost::uint16_t&)> on_server_down);
   int ConnectToSend(const std::string &remote_ip,
                     const boost::uint16_t &remote_port,
                     const std::string &local_ip,
@@ -197,18 +197,65 @@ class TransportHandler {
   std::map < boost::int16_t, transport::Transport* > transports_;
   boost::int16_t next_id_;
   boost::int16_t started_count_;
-  boost::function<void(const rpcprotocol::RpcMessage&,
-                       const boost::uint32_t&,
-                       const boost::int16_t&,
-                       const float&)> rpc_message_notifier_;
-  boost::function<void(const std::string&,
-                       const boost::uint32_t&,
-                       const boost::int16_t&,
-                       const float&)> message_notifier_;
-  boost::function<void(const bool&,
-                       const std::string&,
-                       const boost::uint16_t&)> server_down_notifier_;
-  boost::function<void(const boost::uint32_t&, const bool&)> send_notifier_;
+//   boost::function<void(const rpcprotocol::RpcMessage&,
+//                        const boost::uint32_t&,
+//                        const boost::int16_t&,
+//                        const float&)> rpc_message_notifier_;
+//   boost::function<void(const std::string&,
+//                        const boost::uint32_t&,
+//                        const boost::int16_t&,
+//                        const float&)> message_notifier_;
+//   boost::function<void(const bool&,
+//                        const std::string&,
+//                        const boost::uint16_t&)> server_down_notifier_;
+//   boost::function<void(const boost::uint32_t&, const bool&)> send_notifier_;
+public: // SIGNALS
+  typedef bs2::signal<void(const std::string&,
+                                      const boost::uint32_t&,
+                                      const boost::int16_t&,
+                                      const float&)>SignalMessageReceived;
+  typedef bs2::signal<void(const rpcprotocol::RpcMessage&,
+                                      const boost::uint32_t&,
+                                      const boost::int16_t&,
+                                      const float &)>SignalRPCMessageReceived;
+  typedef bs2::signal<void(const bool &,
+                           const std::string&,
+                           const boost::uint16_t)>
+                            SignalConnectionDown;
+  typedef bs2::signal<void(const boost::uint32_t&, const bool&)> SignalSent;
+ // CONNECTIONS (method is basically the same as sig.connect().)
+  virtual bs2::connection connect_message_recieved(const
+                                          SignalMessageReceived::slot_type &
+                                          SignalMessageReceived){
+    return SignalMessageReceived_.connect(SignalMessageReceived);
+  }
+  virtual bs2::connection connect_rpc_message_recieved(const
+                                          SignalRPCMessageReceived::slot_type &
+                                          SignalRPCMessageReceived){
+    return SignalRPCMessageReceived_.connect(SignalRPCMessageReceived);
+  }
+  virtual  bs2::connection connect_connection_down(const
+                                           SignalConnectionDown::slot_type &
+                                           SignalConnectionDown) {
+    return SignalConnectionDown_.connect(SignalConnectionDown);
+  }
+  virtual bs2::connection connect_sent(const SignalSent::slot_type &SignalSent)
+  {
+    return SignalSent_.connect(SignalSent);
+  }
+protected:
+
+  SignalRPCMessageReceived SignalRPCMessageReceived_;
+  SignalMessageReceived    SignalMessageReceived_;
+  SignalConnectionDown     SignalConnectionDown_;
+  SignalSent               SignalSent_;
+  bool upnp_;
+  bool nat_pnp_;
+  bool rendezvous_;
+  bool local_port_only_;
+  bool stopped_;
+
+
 };
 
 }  // namespace transport
