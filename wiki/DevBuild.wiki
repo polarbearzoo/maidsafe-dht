@@ -36,7 +36,7 @@ This page explains how to build the maidsafe-dht project and details prerequisit
     * `bootstrap` (creates the bjam executable in the boost directory which is used to build the boost libraries and headers)
     * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
     * `bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-test --with-thread install --prefix=c:\usr stage` (builds the libraries, copies them to `c:\usr\lib` and copies the headers to `c:\usr\include`)<br>
-  * [http://code.google.com/p/googletest/downloads/list Google Test (minimum version 1.4)]<br>If using MSVC, ensure you build Gtest from the solution `gtest-md.sln` and not `gtest.sln` or the Gtest libraries will link to Microsoft C runtime libraries which are incompatible with those used elsewhere in maidsafe-dht.  Also, ensure Debug and Release targets are both built.<br><br>
+  * [http://code.google.com/p/googletest/downloads/list Google Test (minimum version 1.5)]<br>If using MSVC, ensure you build Gtest from the solution `gtest-md.sln` and not `gtest.sln` or the Gtest libraries will link to Microsoft C runtime libraries which are incompatible with those used elsewhere in maidsafe-dht.  Also, ensure Debug and Release targets are both built.<br><br>
   * [http://code.google.com/p/protobuf/downloads/list Google Protocol Buffers (minimum version 2.1.0)]<br>Again, if using MSVC, ensure Debug and Release targets are both built.<br><br>
 
 === Recommended, non-essential ===
