@@ -42,19 +42,20 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "maidsafe/kademlia/knodeimpl.h"
 #include "maidsafe/base/crypto.h"
+#include "maidsafe/maidsafe-dht.h"
 #include "maidsafe/base/routingtable.h"
 #include "maidsafe/tests/kademlia/fake_callbacks.h"
 #include "maidsafe/udt/udt.h"
 #include "maidsafe/protobuf/signed_kadvalue.pb.h"
 #include "maidsafe/base/log.h"
-#include "maidsafe/transport/transport.h"
-#include "maidsafe/transport/udttransport.h"
+#include "maidsafe/transport/transport-api.h"
+#include "maidsafe/transport/transportudt.h"
 #include "maidsafe/tests/validationimpl.h"
 
 namespace fs = boost::filesystem;
 
 namespace test_knode {
-  static const boost::uint16_t K = 16;
+  static const boost::uint16_t K = 8;
 }  // namespace test_knode
 
 const boost::int16_t kNetworkSize = test_knode::K + 1;
@@ -131,7 +132,7 @@ class Env: public testing::Environment {
   virtual ~Env() {}
 
   virtual void SetUp() {
-    test_dir_ = std::string("KnodeTest") +
+    test_dir_ = std::string("temp/KnodeTest") +
         boost::lexical_cast<std::string>(base::RandomUint32());
     kad_config_file_ = test_dir_ + std::string("/.kadconfig");
     try {
@@ -149,7 +150,7 @@ class Env: public testing::Environment {
     for (boost::int16_t  i = 0; i < kNetworkSize; ++i) {
       trans_handlers_.push_back(boost::shared_ptr<transport::TransportHandler>
           (new transport::TransportHandler()));
-      trans_handlers_.at(i).get()->Register(new transport::UdtTransport,
+      trans_handlers_.at(i).get()->Register(new transport::TransportUDT,
                                             &transport_id);
       transport_ids_.push_back(transport_id);
       boost::shared_ptr<rpcprotocol::ChannelManager>
@@ -171,9 +172,9 @@ class Env: public testing::Environment {
       knode_local_->set_transport_id(transport_ids_[i]);
 
       EXPECT_TRUE(channel_managers_[i]->RegisterNotifiersToTransport());
-//       EXPECT_TRUE(trans_handlers_[i]->RegisterOnServerDown(
-//                       boost::bind(&kad::KNode::HandleDeadRendezvousServer,
-//                                   knode_local_.get(), _1)));
+      EXPECT_TRUE(trans_handlers_[i]->RegisterOnServerDown(
+                      boost::bind(&kad::KNode::HandleDeadRendezvousServer,
+                                  knode_local_.get(), _1)));
 
       EXPECT_EQ(0, trans_handlers_[i]->Start(0, transport_ids_[i]));
       EXPECT_EQ(0, channel_managers_[i]->Start());
@@ -290,14 +291,14 @@ class Env: public testing::Environment {
     node_ids_.clear();
     ports_.clear();
     printf("TestKNode, TearDown Finished\n");
-    transport::UdtTransport::CleanUp();
+    transport::TransportUDT::CleanUp();
   }
 };
 
 TEST_F(KNodeTest, FUNC_KAD_ClientKnodeConnect) {
   transport::TransportHandler trans_handler;
   boost::int16_t transport_id;
-  trans_handler.Register(new transport::UdtTransport, &transport_id);
+  trans_handler.Register(new transport::TransportUDT, &transport_id);
   rpcprotocol::ChannelManager channel_manager_local_(&trans_handler);
   std::string db_local = test_dir_ + std::string("/datastore") +
       boost::lexical_cast<std::string>(kNetworkSize + 1);
@@ -321,8 +322,8 @@ TEST_F(KNodeTest, FUNC_KAD_ClientKnodeConnect) {
     pubkey, privkey, false, false);
   knode_local_.set_transport_id(transport_id);
   EXPECT_TRUE(channel_manager_local_.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
-//     &kad::KNode::HandleDeadRendezvousServer, &knode_local_, _1)));
+  EXPECT_TRUE(trans_handler.RegisterOnServerDown(boost::bind(
+    &kad::KNode::HandleDeadRendezvousServer, &knode_local_, _1)));
   ASSERT_EQ(0, trans_handler.Start(0, transport_id));
   EXPECT_EQ(0, channel_manager_local_.Start());
   ports_.insert(knode_local_.host_port());
@@ -336,7 +337,7 @@ TEST_F(KNodeTest, FUNC_KAD_ClientKnodeConnect) {
 
   transport::TransportHandler trans_handler1;
   boost::int16_t transport_id1;
-  trans_handler1.Register(new transport::UdtTransport, &transport_id1);
+  trans_handler1.Register(new transport::TransportUDT, &transport_id1);
   rpcprotocol::ChannelManager channel_manager_local1(&trans_handler1);
   db_local = test_dir_ + std::string("/datastore") +
       boost::lexical_cast<std::string>(kNetworkSize + 1);
@@ -358,8 +359,8 @@ TEST_F(KNodeTest, FUNC_KAD_ClientKnodeConnect) {
     pubkey,  privkey, false, false);
   knode_local1.set_transport_id(transport_id1);
   EXPECT_TRUE(channel_manager_local1.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(trans_handler1.RegisterOnServerDown(boost::bind(
-//     &kad::KNode::HandleDeadRendezvousServer, &knode_local1, _1)));
+  EXPECT_TRUE(trans_handler1.RegisterOnServerDown(boost::bind(
+    &kad::KNode::HandleDeadRendezvousServer, &knode_local1, _1)));
   ASSERT_EQ(0, trans_handler1.Start(0, transport_id));
   EXPECT_EQ(0, channel_manager_local1.Start());
   ports_.insert(knode_local1.host_port());
@@ -943,8 +944,8 @@ TEST_F(KNodeTest, FUNC_KAD_FindValueWithDeadNodes) {
     output.close();
 
     EXPECT_TRUE(channel_managers_[2 + i]->RegisterNotifiersToTransport());
-//     EXPECT_TRUE(trans_handlers_[2 + i]->RegisterOnServerDown(boost::bind(
-//       &kad::KNode::HandleDeadRendezvousServer, knodes_[2 + i].get(), _1)));
+    EXPECT_TRUE(trans_handlers_[2 + i]->RegisterOnServerDown(boost::bind(
+      &kad::KNode::HandleDeadRendezvousServer, knodes_[2 + i].get(), _1)));
     EXPECT_EQ(0, trans_handlers_[2 + i]->Start(0, transport_ids_[2 + i]));
     EXPECT_EQ(0, channel_managers_[2 + i]->Start());
 
@@ -1046,8 +1047,8 @@ TEST_F(KNodeTest, FUNC_KAD_Downlist) {
 
   // Restart dead node
   ASSERT_TRUE(channel_managers_[r_node]->RegisterNotifiersToTransport());
-//   ASSERT_TRUE(trans_handlers_[r_node]->RegisterOnServerDown(boost::bind(
-//     &kad::KNode::HandleDeadRendezvousServer, knodes_[r_node].get(), _1)));
+  ASSERT_TRUE(trans_handlers_[r_node]->RegisterOnServerDown(boost::bind(
+    &kad::KNode::HandleDeadRendezvousServer, knodes_[r_node].get(), _1)));
   ASSERT_EQ(0, trans_handlers_[r_node]->Start(0, transport_ids_[r_node]));
   ASSERT_EQ(0, channel_managers_[r_node]->Start());
   cb_.Reset();
@@ -1162,8 +1163,8 @@ TEST_F(KNodeTest, FUNC_KAD_FindDeadNode) {
   // Restart dead node
   LOG(INFO) << "+++++++++++++++++Restarting " << r_node << "\n";
   ASSERT_TRUE(channel_managers_[r_node]->RegisterNotifiersToTransport());
-//   ASSERT_TRUE(trans_handlers_[r_node]->RegisterOnServerDown(boost::bind(
-//     &kad::KNode::HandleDeadRendezvousServer, knodes_[r_node].get(), _1)));
+  ASSERT_TRUE(trans_handlers_[r_node]->RegisterOnServerDown(boost::bind(
+    &kad::KNode::HandleDeadRendezvousServer, knodes_[r_node].get(), _1)));
   ASSERT_EQ(0, trans_handlers_[r_node]->Start(0, transport_ids_[r_node]));
   ASSERT_EQ(0, channel_managers_[r_node]->Start());
   cb_.Reset();
@@ -1521,7 +1522,7 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
     FAIL();
   }
 
-  transport::UdtTransport trudtL;
+  transport::TransportUDT trudtL;
   boost::int16_t id_L;
   transport::TransportHandler thandlerL;
   thandlerL.Register(&trudtL, &id_L);
@@ -1530,9 +1531,9 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
                    kad::kAlpha, kad::kBeta, kad::kRefreshTime, "", "", false,
                    false);
   EXPECT_TRUE(channel_managerL.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(thandlerL.RegisterOnServerDown(
-//                   boost::bind(&kad::KNode::HandleDeadRendezvousServer,
-//                               &nodeL, _1)));
+  EXPECT_TRUE(thandlerL.RegisterOnServerDown(
+                  boost::bind(&kad::KNode::HandleDeadRendezvousServer,
+                              &nodeL, _1)));
   EXPECT_EQ(0, thandlerL.Start(0, id_L));
   EXPECT_EQ(0, channel_managerL.Start());
 
@@ -1575,7 +1576,7 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
   outputP.close();
 
   //  Node M
-  transport::UdtTransport trudtM;
+  transport::TransportUDT trudtM;
   boost::int16_t id_M;
   transport::TransportHandler thandlerM;
   thandlerM.Register(&trudtM, &id_M);
@@ -1584,9 +1585,9 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
                    kad::kAlpha, kad::kBeta, kad::kRefreshTime, "", "", false,
                    false);
   EXPECT_TRUE(channel_managerM.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(thandlerM.RegisterOnServerDown(
-//                   boost::bind(&kad::KNode::HandleDeadRendezvousServer,
-//                               &nodeM, _1)));
+  EXPECT_TRUE(thandlerM.RegisterOnServerDown(
+                  boost::bind(&kad::KNode::HandleDeadRendezvousServer,
+                              &nodeM, _1)));
   EXPECT_EQ(0, thandlerM.Start(0, id_M));
   EXPECT_EQ(0, channel_managerM.Start());
   cb_.Reset();
@@ -1602,7 +1603,7 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
   thandlerM.Stop(id_M);
 
   //  Node N
-  transport::UdtTransport trudtN;
+  transport::TransportUDT trudtN;
   boost::int16_t id_N;
   transport::TransportHandler thandlerN;
   thandlerN.Register(&trudtN, &id_N);
@@ -1611,9 +1612,9 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
                    kad::kAlpha, kad::kBeta, kad::kRefreshTime, "", "", false,
                    false);
   EXPECT_TRUE(channel_managerN.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(thandlerN.RegisterOnServerDown(
-//                   boost::bind(&kad::KNode::HandleDeadRendezvousServer,
-//                               &nodeN, _1)));
+  EXPECT_TRUE(thandlerN.RegisterOnServerDown(
+                  boost::bind(&kad::KNode::HandleDeadRendezvousServer,
+                              &nodeN, _1)));
   EXPECT_EQ(0, thandlerN.Start(0, id_N));
   EXPECT_EQ(0, channel_managerN.Start());
   cb_.Reset();
@@ -1632,7 +1633,7 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
   EXPECT_FALSE(nodeL.GetContact(nodeM.node_id(), &c));
 
   //  Node P
-  transport::UdtTransport trudtP;
+  transport::TransportUDT trudtP;
   boost::int16_t id_P;
   transport::TransportHandler thandlerP;
   thandlerP.Register(&trudtP, &id_P);
@@ -1641,9 +1642,9 @@ TEST_F(KNodeTest, FUNC_KAD_Issue13Bootstrap) {
                    kad::kAlpha, kad::kBeta, kad::kRefreshTime, "", "", false,
                    false);
   EXPECT_TRUE(channel_managerP.RegisterNotifiersToTransport());
-//   EXPECT_TRUE(thandlerP.RegisterOnServerDown(
-//                   boost::bind(&kad::KNode::HandleDeadRendezvousServer,
-//                               &nodeP, _1)));
+  EXPECT_TRUE(thandlerP.RegisterOnServerDown(
+                  boost::bind(&kad::KNode::HandleDeadRendezvousServer,
+                              &nodeP, _1)));
   EXPECT_EQ(0, thandlerP.Start(0, id_P));
   EXPECT_EQ(0, channel_managerP.Start());
   cb_.Reset();
