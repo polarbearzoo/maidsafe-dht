@@ -27,7 +27,7 @@ This page explains how to build the maidsafe-dht project and details prerequisit
   ==== Unix ====
     * `./bootstrap.sh` (creates the bjam executable in the boost directory which is used to build and install the boost libraries and headers)
     * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
-    * `sudo ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=versioned --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-test --with-thread install --prefix=/usr stage` (builds the libraries, copies them to `/usr/lib` and copies the headers to `/usr/include`)<br>
+    * `sudo ./bjam toolset=gcc variant=release link=static threading=multi runtime-link=shared --build-dir=Build --layout=system --with-date_time --with-filesystem --with-program_options --with-regex --with-system --with-test --with-thread install --prefix=/usr stage` (builds the libraries, copies them to `/usr/lib` and copies the headers to `/usr/include`)<br>
   ==== Windows - MSVC ====
     * `bootstrap` (creates the bjam executable in the boost directory which is used to build the boost libraries and headers)
     * `mkdir Build` (creates a directory to hold the boost libraries prior to installing them)
